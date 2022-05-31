@@ -9,6 +9,6 @@ import com.fleetmanagement.shipping.model.DeliveryPoint;
 
 @Repository
 public interface DeliveryPointRepository extends JpaRepository<DeliveryPoint, UUID> {
-	DeliveryPoint findDeliveryPointByValue(Integer value);
-	String deleteDeliveryPointByValue(Integer value);
+	DeliveryPoint findDeliveryPointByPoint(Integer point);
+	String deleteDeliveryPointByPoint(Integer point);
 }

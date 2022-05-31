@@ -37,11 +37,11 @@ public class DeliveryPoint {
 
 	@NotNull
 	@Column(nullable = false)
-	private String name;
+	private String deliveryPoint;
 	
 	@NotNull
 	@Column(nullable = false)
-	private Integer value;
+	private Integer point;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp

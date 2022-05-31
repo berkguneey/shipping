@@ -29,8 +29,8 @@ public class DeliveryPointService {
 				.collect(Collectors.toList());
 	}
 
-	public DeliveryPointDto getDeliveryPointByValue(Integer value) {
-		return mapper.map(repository.findDeliveryPointByValue(value), DeliveryPointDto.class);
+	public DeliveryPointDto getDeliveryPointByPoint(Integer point) {
+		return mapper.map(repository.findDeliveryPointByPoint(point), DeliveryPointDto.class);
 	}
 
 	public DeliveryPointDto insert(DeliveryPointRequestDto deliveryPointRequest) {
@@ -39,7 +39,7 @@ public class DeliveryPointService {
 	}
 
 	public String delete(Integer value) {
-		return repository.deleteDeliveryPointByValue(value);
+		return repository.deleteDeliveryPointByPoint(value);
 	}
 
 }

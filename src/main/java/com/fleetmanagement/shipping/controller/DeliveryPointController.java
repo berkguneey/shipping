@@ -34,8 +34,8 @@ public class DeliveryPointController {
 	}
 
 	@GetMapping("/{value}")
-	public ResponseEntity<DeliveryPointDto> getDeliveryPointsByValue(@PathVariable Integer value) {
-		return new ResponseEntity<DeliveryPointDto>(service.getDeliveryPointByValue(value), HttpStatus.OK);
+	public ResponseEntity<DeliveryPointDto> getDeliveryPointsByPoint(@PathVariable Integer point) {
+		return new ResponseEntity<DeliveryPointDto>(service.getDeliveryPointByPoint(point), HttpStatus.OK);
 	}
 
 	@PostMapping
