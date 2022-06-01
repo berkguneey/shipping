@@ -13,7 +13,7 @@ import com.fleetmanagement.shipping.exception.AlreadyExistsException;
 import com.fleetmanagement.shipping.exception.NoDataFoundException;
 import com.fleetmanagement.shipping.model.Vehicle;
 import com.fleetmanagement.shipping.repository.VehicleRepository;
-import com.fleetmanagement.shipping.util.VehicleValidation;
+import com.fleetmanagement.shipping.util.LicensePlateValidation;
 
 @Service
 public class VehicleService {
@@ -44,12 +44,12 @@ public class VehicleService {
 			throw new AlreadyExistsException(
 					"Vehicle already exists. License plate is " + vehicleRequest.getLicensePlate());
 		}
-		VehicleValidation.validateLicensePlate(vehicleRequest.getLicensePlate());
+		LicensePlateValidation.validate(vehicleRequest.getLicensePlate());
 		Vehicle model = mapper.map(vehicleRequest, Vehicle.class);
 		return mapper.map(repository.save(model), VehicleDto.class);
 	}
 
-	public String delete(String licensePlate) {
+	public Long delete(String licensePlate) {
 		return repository.deleteVehicleByLicensePlate(licensePlate);
 	}
 
