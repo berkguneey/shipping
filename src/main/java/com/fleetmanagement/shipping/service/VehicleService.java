@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.fleetmanagement.shipping.dto.VehicleDto;
 import com.fleetmanagement.shipping.dto.VehicleRequestDto;
+import com.fleetmanagement.shipping.exception.AlreadyExistsException;
+import com.fleetmanagement.shipping.exception.NoDataFoundException;
 import com.fleetmanagement.shipping.model.Vehicle;
 import com.fleetmanagement.shipping.repository.VehicleRepository;
+import com.fleetmanagement.shipping.util.VehicleValidation;
 
 @Service
 public class VehicleService {
@@ -30,11 +33,18 @@ public class VehicleService {
 	}
 
 	public VehicleDto getVehicleByLicensePlate(String licensePlate) {
-		return mapper.map(repository.findVehicleByLicensePlate(licensePlate), VehicleDto.class);
+		return mapper.map(
+				repository.findVehicleByLicensePlate(licensePlate).orElseThrow(
+						() -> new NoDataFoundException("Vehicle not found. License plate is " + licensePlate)),
+				VehicleDto.class);
 	}
 
 	public VehicleDto insert(VehicleRequestDto vehicleRequest) {
-		// tr plaka kontrolü koy.
+		if (repository.existsVehicleByLicensePlate(vehicleRequest.getLicensePlate())) {
+			throw new AlreadyExistsException(
+					"Vehicle already exists. License plate is " + vehicleRequest.getLicensePlate());
+		}
+		VehicleValidation.validateLicensePlate(vehicleRequest.getLicensePlate());
 		Vehicle model = mapper.map(vehicleRequest, Vehicle.class);
 		return mapper.map(repository.save(model), VehicleDto.class);
 	}

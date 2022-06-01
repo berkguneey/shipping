@@ -1,5 +1,6 @@
 package com.fleetmanagement.shipping.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,6 @@ import com.fleetmanagement.shipping.model.DeliveryPoint;
 
 @Repository
 public interface DeliveryPointRepository extends JpaRepository<DeliveryPoint, UUID> {
-	DeliveryPoint findDeliveryPointByPoint(Integer point);
-	String deleteDeliveryPointByPoint(Integer point);
+	Optional<DeliveryPoint> findDeliveryPointByPoint(Integer point);
+	Integer deleteDeliveryPointByPoint(Integer point);
 }

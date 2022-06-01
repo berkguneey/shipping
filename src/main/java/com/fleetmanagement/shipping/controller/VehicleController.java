@@ -30,22 +30,22 @@ public class VehicleController {
 
 	@GetMapping
 	public ResponseEntity<List<VehicleDto>> getVehicles() {
-		return new ResponseEntity<List<VehicleDto>>(service.getAllVehicles(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getAllVehicles(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{licensePlate}")
 	public ResponseEntity<VehicleDto> getVehicleByLicensePlate(@PathVariable String licensePlate) {
-		return new ResponseEntity<VehicleDto>(service.getVehicleByLicensePlate(licensePlate), HttpStatus.OK);
+		return new ResponseEntity<>(service.getVehicleByLicensePlate(licensePlate), HttpStatus.OK);
 	}
 
 	@PostMapping
 	public ResponseEntity<VehicleDto> createVehicle(@RequestBody VehicleRequestDto vehicleRequest) {
-		return new ResponseEntity<VehicleDto>(service.insert(vehicleRequest), HttpStatus.OK);
+		return new ResponseEntity<>(service.insert(vehicleRequest), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{licensePlate}")
 	public ResponseEntity<String> deleteVehicle(@PathVariable String licensePlate) {
-		return new ResponseEntity<String>(service.delete(licensePlate), HttpStatus.OK);
+		return new ResponseEntity<>(service.delete(licensePlate), HttpStatus.OK);
 	}
 
 }

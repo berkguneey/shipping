@@ -30,23 +30,23 @@ public class DeliveryPointController {
 
 	@GetMapping
 	public ResponseEntity<List<DeliveryPointDto>> getDeliveryPoints() {
-		return new ResponseEntity<List<DeliveryPointDto>>(service.getAllDeliveryPoints(), HttpStatus.OK);
+		return new ResponseEntity<>(service.getAllDeliveryPoints(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{value}")
-	public ResponseEntity<DeliveryPointDto> getDeliveryPointsByPoint(@PathVariable Integer point) {
-		return new ResponseEntity<DeliveryPointDto>(service.getDeliveryPointByPoint(point), HttpStatus.OK);
+	public ResponseEntity<DeliveryPointDto> getDeliveryPointByPoint(@PathVariable Integer point) {
+		return new ResponseEntity<>(service.getDeliveryPointByPoint(point), HttpStatus.OK);
 	}
 
 	@PostMapping
 	public ResponseEntity<DeliveryPointDto> createDeliveryPoint(
 			@RequestBody DeliveryPointRequestDto deliveryPointRequest) {
-		return new ResponseEntity<DeliveryPointDto>(service.insert(deliveryPointRequest), HttpStatus.OK);
+		return new ResponseEntity<>(service.insert(deliveryPointRequest), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{value}")
-	public ResponseEntity<String> deleteDeliveryPoint(@PathVariable Integer value) {
-		return new ResponseEntity<String>(service.delete(value), HttpStatus.OK);
+	public ResponseEntity<Integer> deleteDeliveryPoint(@PathVariable Integer value) {
+		return new ResponseEntity<>(service.delete(value), HttpStatus.OK);
 	}
 
 }

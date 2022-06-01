@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.fleetmanagement.shipping.dto.DeliveryPointDto;
 import com.fleetmanagement.shipping.dto.DeliveryPointRequestDto;
+import com.fleetmanagement.shipping.exception.NoDataFoundException;
 import com.fleetmanagement.shipping.model.DeliveryPoint;
 import com.fleetmanagement.shipping.repository.DeliveryPointRepository;
 
@@ -30,7 +31,8 @@ public class DeliveryPointService {
 	}
 
 	public DeliveryPointDto getDeliveryPointByPoint(Integer point) {
-		return mapper.map(repository.findDeliveryPointByPoint(point), DeliveryPointDto.class);
+		return mapper.map(repository.findDeliveryPointByPoint(point).orElseThrow(
+				() -> new NoDataFoundException("Delivery point not found. Point is " + point)), DeliveryPointDto.class);
 	}
 
 	public DeliveryPointDto insert(DeliveryPointRequestDto deliveryPointRequest) {
@@ -38,7 +40,7 @@ public class DeliveryPointService {
 		return mapper.map(repository.save(model), DeliveryPointDto.class);
 	}
 
-	public String delete(Integer value) {
+	public Integer delete(Integer value) {
 		return repository.deleteDeliveryPointByPoint(value);
 	}
 
