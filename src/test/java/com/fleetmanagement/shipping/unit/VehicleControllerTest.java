@@ -5,9 +5,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,9 +44,22 @@ class VehicleControllerTest {
 	
 	@BeforeEach
 	public void setUp() {
-		vehicleRequest = VehicleRequestDto.builder().licensePlate("34XX444").model("HONDA").build();
-		vehicle1 = VehicleDto.builder().id(UUID.randomUUID()).licensePlate("34XX444").model("HONDA").createdAt(new Date()).build();
-		vehicle2 = VehicleDto.builder().id(UUID.randomUUID()).licensePlate("34YY555").model("SCANIA").createdAt(new Date()).build();
+		vehicleRequest = new VehicleRequestDto();
+		vehicleRequest.setLicensePlate("34XX444");
+		vehicleRequest.setModel("HONDA");
+		
+		vehicle1 = new VehicleDto();
+		vehicle1.setId(UUID.randomUUID());
+		vehicle1.setLicensePlate("34XX444");
+		vehicle1.setModel("HONDA");
+		vehicle1.setCreatedAt(LocalDateTime.now());
+		
+		vehicle2 = new VehicleDto();
+		vehicle2.setId(UUID.randomUUID());
+		vehicle2.setLicensePlate("34YY555");
+		vehicle2.setModel("SCANIA");
+		vehicle2.setCreatedAt(LocalDateTime.now());
+		
 		vehicleList = new ArrayList<>(Arrays.asList(vehicle1, vehicle2));
 	}
 	
@@ -70,7 +83,7 @@ class VehicleControllerTest {
 	
 	@Test
 	public void testDeleteVehicle() {
-		when(service.delete(anyString())).thenReturn(vehicle1.getLicensePlate());
+		when(service.delete(anyString())).thenReturn(1L);
 		assertNotNull(controller.deleteVehicle("34XX444"));
 	}
 

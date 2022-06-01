@@ -44,7 +44,7 @@ public class VehicleController {
 	}
 
 	@DeleteMapping("/{licensePlate}")
-	public ResponseEntity<String> deleteVehicle(@PathVariable String licensePlate) {
+	public ResponseEntity<Long> deleteVehicle(@PathVariable String licensePlate) {
 		return new ResponseEntity<>(service.delete(licensePlate), HttpStatus.OK);
 	}
 
