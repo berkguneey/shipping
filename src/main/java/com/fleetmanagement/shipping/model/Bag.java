@@ -2,6 +2,8 @@ package com.fleetmanagement.shipping.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.sun.istack.NotNull;
 
@@ -11,14 +13,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Vehicle extends BaseModel {
+public class Bag extends BaseModel {
 
 	@NotNull
 	@Column(nullable = false)
-	private String licensePlate;
+	private String barcode;
 
 	@NotNull
-	@Column(nullable = false)
-	private String model;
+	@ManyToOne()
+	@JoinColumn(name = "point")
+	private DeliveryPoint deliveryPoint;
 
 }
