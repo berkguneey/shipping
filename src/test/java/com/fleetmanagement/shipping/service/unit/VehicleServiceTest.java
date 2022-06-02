@@ -26,7 +26,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.fleetmanagement.shipping.dto.VehicleRequestDto;
-import com.fleetmanagement.shipping.exception.AlreadyExistsException;
+import com.fleetmanagement.shipping.exception.BusinessException;
 import com.fleetmanagement.shipping.exception.NoDataFoundException;
 import com.fleetmanagement.shipping.helper.ValidationStrategy;
 import com.fleetmanagement.shipping.model.Vehicle;
@@ -102,7 +102,7 @@ class VehicleServiceTest {
 	public void testInsert_ReturnAlreadyExists() {
 		when(repository.existsVehicleByLicensePlate(anyString())).thenReturn(true);
 		when(repository.save(any(Vehicle.class))).thenReturn(vehicle1);
-		assertThrows(AlreadyExistsException.class, () -> service.insert(vehicleRequest));
+		assertThrows(BusinessException.class, () -> service.insert(vehicleRequest));
 	}
 	
 	@Test

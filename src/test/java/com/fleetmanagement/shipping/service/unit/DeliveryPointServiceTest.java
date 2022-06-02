@@ -28,7 +28,7 @@ import org.modelmapper.ModelMapper;
 
 import com.fleetmanagement.shipping.dto.DeliveryPointRequestDto;
 import com.fleetmanagement.shipping.dto.VehicleRequestDto;
-import com.fleetmanagement.shipping.exception.AlreadyExistsException;
+import com.fleetmanagement.shipping.exception.BusinessException;
 import com.fleetmanagement.shipping.exception.NoDataFoundException;
 import com.fleetmanagement.shipping.model.DeliveryPoint;
 import com.fleetmanagement.shipping.model.Vehicle;
@@ -103,7 +103,7 @@ class DeliveryPointServiceTest {
 	public void testInsert_ReturnAlreadyExists() {
 		when(repository.existsDeliveryPointByName(anyString())).thenReturn(true);
 		when(repository.save(any(DeliveryPoint.class))).thenReturn(deliveryPoint1);
-		assertThrows(AlreadyExistsException.class, () -> service.insert(deliveryPointRequest));
+		assertThrows(BusinessException.class, () -> service.insert(deliveryPointRequest));
 	}
 
 	@Test

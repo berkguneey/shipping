@@ -13,6 +13,7 @@ import com.fleetmanagement.shipping.dto.BagDto;
 import com.fleetmanagement.shipping.dto.BagRequestDto;
 import com.fleetmanagement.shipping.dto.DeliveryPointDto;
 import com.fleetmanagement.shipping.exception.BusinessException;
+import com.fleetmanagement.shipping.exception.NoDataFoundException;
 import com.fleetmanagement.shipping.helper.ValidationStrategy;
 import com.fleetmanagement.shipping.model.Bag;
 import com.fleetmanagement.shipping.model.DeliveryPoint;
@@ -44,7 +45,7 @@ public class BagServiceImpl implements BagService {
 	@Override
 	public BagDto getBagByBarcode(String barcode) {
 		return mapper.map(repository.findBagByBarcode(barcode)
-				.orElseThrow(() -> new BusinessException(ErrorConstants.BAG_NOT_FOUND)), BagDto.class);
+				.orElseThrow(() -> new NoDataFoundException(ErrorConstants.BAG_NOT_FOUND)), BagDto.class);
 	}
 
 	@Override

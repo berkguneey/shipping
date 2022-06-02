@@ -14,6 +14,7 @@ import com.fleetmanagement.shipping.dto.DeliveryPointDto;
 import com.fleetmanagement.shipping.dto.PackageDto;
 import com.fleetmanagement.shipping.dto.PackageRequestDto;
 import com.fleetmanagement.shipping.exception.BusinessException;
+import com.fleetmanagement.shipping.exception.NoDataFoundException;
 import com.fleetmanagement.shipping.helper.ValidationStrategy;
 import com.fleetmanagement.shipping.model.Bag;
 import com.fleetmanagement.shipping.model.DeliveryPoint;
@@ -51,7 +52,7 @@ public class PackageServiceImpl implements PackageService {
 	@Override
 	public PackageDto getPackageByBarcode(String barcode) {
 		return mapper.map(repository.findPackageByBarcode(barcode)
-				.orElseThrow(() -> new BusinessException(ErrorConstants.PACKAGE_NOT_FOUND)), PackageDto.class);
+				.orElseThrow(() -> new NoDataFoundException(ErrorConstants.PACKAGE_NOT_FOUND)), PackageDto.class);
 	}
 
 	@Override

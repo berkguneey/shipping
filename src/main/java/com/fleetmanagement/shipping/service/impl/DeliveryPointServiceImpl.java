@@ -12,6 +12,7 @@ import com.fleetmanagement.shipping.constant.ErrorConstants;
 import com.fleetmanagement.shipping.dto.DeliveryPointDto;
 import com.fleetmanagement.shipping.dto.DeliveryPointRequestDto;
 import com.fleetmanagement.shipping.exception.BusinessException;
+import com.fleetmanagement.shipping.exception.NoDataFoundException;
 import com.fleetmanagement.shipping.model.DeliveryPoint;
 import com.fleetmanagement.shipping.repository.DeliveryPointRepository;
 import com.fleetmanagement.shipping.service.DeliveryPointService;
@@ -38,7 +39,7 @@ public class DeliveryPointServiceImpl implements DeliveryPointService {
 	public DeliveryPointDto getDeliveryPointById(UUID id) {
 		return mapper.map(
 				repository.findById(id)
-						.orElseThrow(() -> new BusinessException(ErrorConstants.DELIVERY_POINT_NOT_FOUND)),
+						.orElseThrow(() -> new NoDataFoundException(ErrorConstants.DELIVERY_POINT_NOT_FOUND)),
 				DeliveryPointDto.class);
 	}
 
