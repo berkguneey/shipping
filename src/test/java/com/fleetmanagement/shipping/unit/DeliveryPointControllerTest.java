@@ -2,6 +2,8 @@ package com.fleetmanagement.shipping.unit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
@@ -35,52 +37,52 @@ class DeliveryPointControllerTest {
 	ModelMapper mapper;
 	@InjectMocks
 	DeliveryPointController controller;
-	
+
 	DeliveryPointRequestDto deliveryPointRequest;
 	List<DeliveryPointDto> deliveryPointList;
 	DeliveryPointDto deliveryPoint1;
 	DeliveryPointDto deliveryPoint2;
-	
+
 	@BeforeEach
 	public void setUp() {
 		deliveryPointRequest = new DeliveryPointRequestDto();
 		deliveryPointRequest.setName("Branch");
-		
+
 		deliveryPoint1 = new DeliveryPointDto();
 		deliveryPoint1.setId(UUID.randomUUID());
 		deliveryPoint1.setName("Branch");
 		deliveryPoint1.setCreatedAt(LocalDateTime.now());
-		
+
 		deliveryPoint2 = new DeliveryPointDto();
 		deliveryPoint2.setId(UUID.randomUUID());
 		deliveryPoint2.setName("Distribution Center");
 		deliveryPoint2.setCreatedAt(LocalDateTime.now());
-		
+
 		deliveryPointList = new ArrayList<>(Arrays.asList(deliveryPoint1, deliveryPoint2));
 	}
-	
+
 	@Test
 	public void testGetDeliveryPoints() {
 		when(service.getAllDeliveryPoints()).thenReturn(deliveryPointList);
 		assertNotNull(controller.getDeliveryPoints());
 	}
-	/*
+
 	@Test
 	public void testGetDeliveryPointByPoint() {
 		when(service.getDeliveryPointById(any())).thenReturn(deliveryPoint1);
-		assertNotNull(controller.getDeliveryPointById(1));
+		assertNotNull(controller.getDeliveryPointById(UUID.randomUUID()));
 	}
-	*/
+
 	@Test
 	public void testCreateVehicle() {
 		when(service.insert(any(DeliveryPointRequestDto.class))).thenReturn(deliveryPoint1);
 		assertNotNull(controller.createDeliveryPoint(deliveryPointRequest));
 	}
-	/*
+
 	@Test
 	public void testDeleteVehicle() {
-		when(service.delete(any())).thenReturn(1L);
-		assertNotNull(controller.deleteDeliveryPoint(1));
+		assertNotNull(controller.deleteDeliveryPoint(UUID.randomUUID()));
+		verify(service, times(1)).delete(any());
 	}
-*/
+
 }
