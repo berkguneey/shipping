@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.fleetmanagement.shipping.constant.ErrorConstants;
 import com.fleetmanagement.shipping.dto.VehicleDto;
 import com.fleetmanagement.shipping.dto.VehicleRequestDto;
-import com.fleetmanagement.shipping.exception.AlreadyExistsException;
-import com.fleetmanagement.shipping.exception.NoDataFoundException;
+import com.fleetmanagement.shipping.exception.BusinessException;
 import com.fleetmanagement.shipping.helper.ValidationStrategy;
 import com.fleetmanagement.shipping.model.Vehicle;
 import com.fleetmanagement.shipping.repository.VehicleRepository;
@@ -40,17 +40,14 @@ public class VehicleServiceImpl implements VehicleService {
 
 	@Override
 	public VehicleDto getVehicleByLicensePlate(String licensePlate) {
-		return mapper.map(
-				repository.findVehicleByLicensePlate(licensePlate).orElseThrow(
-						() -> new NoDataFoundException("Vehicle not found. License plate is " + licensePlate)),
-				VehicleDto.class);
+		return mapper.map(repository.findVehicleByLicensePlate(licensePlate)
+				.orElseThrow(() -> new BusinessException(ErrorConstants.VEHICLE_NOT_FOUND)), VehicleDto.class);
 	}
 
 	@Override
 	public VehicleDto insert(VehicleRequestDto vehicleRequest) {
 		if (repository.existsVehicleByLicensePlate(vehicleRequest.getLicensePlate())) {
-			throw new AlreadyExistsException(
-					"Vehicle already exists. License plate is " + vehicleRequest.getLicensePlate());
+			throw new BusinessException(ErrorConstants.VEHICLE_ALREADY_EXISTS);
 		}
 		validationStrategy.validate(vehicleRequest.getLicensePlate());
 		Vehicle mVehicle = mapper.map(vehicleRequest, Vehicle.class);

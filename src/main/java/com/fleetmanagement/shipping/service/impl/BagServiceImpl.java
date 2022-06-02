@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.fleetmanagement.shipping.constant.ErrorConstants;
 import com.fleetmanagement.shipping.dto.BagDto;
 import com.fleetmanagement.shipping.dto.BagRequestDto;
 import com.fleetmanagement.shipping.dto.DeliveryPointDto;
-import com.fleetmanagement.shipping.exception.AlreadyExistsException;
-import com.fleetmanagement.shipping.exception.NoDataFoundException;
+import com.fleetmanagement.shipping.exception.BusinessException;
 import com.fleetmanagement.shipping.helper.ValidationStrategy;
 import com.fleetmanagement.shipping.model.Bag;
 import com.fleetmanagement.shipping.model.DeliveryPoint;
@@ -44,13 +44,13 @@ public class BagServiceImpl implements BagService {
 	@Override
 	public BagDto getBagByBarcode(String barcode) {
 		return mapper.map(repository.findBagByBarcode(barcode)
-				.orElseThrow(() -> new NoDataFoundException("Bag not found. Barcode is " + barcode)), BagDto.class);
+				.orElseThrow(() -> new BusinessException(ErrorConstants.BAG_NOT_FOUND)), BagDto.class);
 	}
 
 	@Override
 	public BagDto insert(BagRequestDto bagRequest) {
 		if (repository.existsBagByBarcode(bagRequest.getBarcode())) {
-			throw new AlreadyExistsException("Bag already exists. Barcode is " + bagRequest.getBarcode());
+			throw new BusinessException(ErrorConstants.BAG_ALREADY_EXISTS);
 		}
 		validationStrategy.validate(bagRequest.getBarcode());
 		DeliveryPointDto deliveryPointDto = deliveryPointService.getDeliveryPointById(bagRequest.getDeliveryPointId());

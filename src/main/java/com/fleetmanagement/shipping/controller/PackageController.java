@@ -49,7 +49,7 @@ public class PackageController {
 		return new ResponseEntity<>(service.delete(barcode), HttpStatus.OK);
 	}
 
-	@PutMapping("/{barcode}")
+	@PutMapping("/{barcode}/bag")
 	public ResponseEntity<PackageDto> updatePackage(@PathVariable String barcode,
 			@RequestBody PackageRequestDto packageRequest) {
 		return new ResponseEntity<>(service.updateBagId(barcode, packageRequest), HttpStatus.OK);

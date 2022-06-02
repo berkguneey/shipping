@@ -10,5 +10,6 @@ public class PackageRequestDto {
 	private String barcode;
 	private UUID deliveryPointId;
 	private Integer weight;
+	private String bagBarcode;
 
 }

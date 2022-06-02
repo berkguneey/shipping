@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.fleetmanagement.shipping.constant.ErrorConstants;
 import com.fleetmanagement.shipping.constant.PackageStatus;
 import com.fleetmanagement.shipping.dto.DeliveryPointDto;
 import com.fleetmanagement.shipping.dto.PackageDto;
 import com.fleetmanagement.shipping.dto.PackageRequestDto;
-import com.fleetmanagement.shipping.exception.AlreadyExistsException;
 import com.fleetmanagement.shipping.exception.BusinessException;
-import com.fleetmanagement.shipping.exception.NoDataFoundException;
 import com.fleetmanagement.shipping.helper.ValidationStrategy;
 import com.fleetmanagement.shipping.model.Bag;
 import com.fleetmanagement.shipping.model.DeliveryPoint;
@@ -51,14 +50,14 @@ public class PackageServiceImpl implements PackageService {
 
 	@Override
 	public PackageDto getPackageByBarcode(String barcode) {
-		return mapper.map(repository.findPackageByBarcode(barcode).orElseThrow(
-				() -> new NoDataFoundException("Package not found. Barcode is " + barcode)), PackageDto.class);
+		return mapper.map(repository.findPackageByBarcode(barcode)
+				.orElseThrow(() -> new BusinessException(ErrorConstants.PACKAGE_NOT_FOUND)), PackageDto.class);
 	}
 
 	@Override
 	public PackageDto insert(PackageRequestDto packageRequest) {
 		if (repository.existsPackageByBarcode(packageRequest.getBarcode())) {
-			throw new AlreadyExistsException("Package already exists. Barcode is " + packageRequest.getBarcode());
+			throw new BusinessException(ErrorConstants.PACKAGE_ALREADY_EXISTS);
 		}
 		validationStrategy.validate(packageRequest.getBarcode());
 		DeliveryPointDto deliveryPointDto = deliveryPointService
@@ -85,10 +84,7 @@ public class PackageServiceImpl implements PackageService {
 
 	private void haveSameDeliveryPoint(Package mPackage, Bag mBag) {
 		if (!mPackage.getDeliveryPoint().getId().equals(mBag.getDeliveryPoint().getId())) {
-			throw new BusinessException(
-					"The package loaded into a bag must have the same delivery point as the bag. Package delivery point is "
-							+ mPackage.getDeliveryPoint().getName() + ", Bag delivery point is "
-							+ mBag.getDeliveryPoint().getName());
+			throw new BusinessException(ErrorConstants.DELIVERY_POINT_DISMATCH);
 		}
 	}
 
