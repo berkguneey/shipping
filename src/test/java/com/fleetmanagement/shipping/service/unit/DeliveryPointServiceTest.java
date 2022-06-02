@@ -1,4 +1,4 @@
-package com.fleetmanagement.shipping.unit;
+package com.fleetmanagement.shipping.service.unit;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

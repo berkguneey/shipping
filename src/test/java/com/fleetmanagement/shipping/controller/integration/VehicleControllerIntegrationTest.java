@@ -1,4 +1,4 @@
-package com.fleetmanagement.shipping.integration;
+package com.fleetmanagement.shipping.controller.integration;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

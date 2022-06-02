@@ -1,4 +1,4 @@
-package com.fleetmanagement.shipping.unit;
+package com.fleetmanagement.shipping.controller.unit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
