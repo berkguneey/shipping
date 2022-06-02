@@ -24,5 +24,8 @@ public class DeliveryPoint extends BaseModel {
 	
 	@OneToMany(mappedBy = "deliveryPoint", cascade = CascadeType.ALL)
     private Set<Bag> bags = new HashSet<>();
+	
+	@OneToMany(mappedBy = "deliveryPoint", cascade = CascadeType.ALL)
+    private Set<Package> packages = new HashSet<>();
 
 }

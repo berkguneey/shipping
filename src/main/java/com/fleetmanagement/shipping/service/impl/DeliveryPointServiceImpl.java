@@ -48,8 +48,8 @@ public class DeliveryPointServiceImpl implements DeliveryPointService {
 			throw new AlreadyExistsException(
 					"Delivery point  already exists. Name is " + deliveryPointRequest.getName());
 		}
-		DeliveryPoint model = mapper.map(deliveryPointRequest, DeliveryPoint.class);
-		return mapper.map(repository.save(model), DeliveryPointDto.class);
+		DeliveryPoint mDeliveryPoint = mapper.map(deliveryPointRequest, DeliveryPoint.class);
+		return mapper.map(repository.save(mDeliveryPoint), DeliveryPointDto.class);
 	}
 
 	@Override

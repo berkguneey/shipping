@@ -25,7 +25,8 @@ public class VehicleServiceImpl implements VehicleService {
 	private final ModelMapper mapper;
 
 	@Autowired
-	public VehicleServiceImpl(VehicleRepository repository, @Qualifier("LicensePlateValidationStrategy") ValidationStrategy validationStrategy, ModelMapper mapper) {
+	public VehicleServiceImpl(VehicleRepository repository,
+			@Qualifier("LicensePlateValidation") ValidationStrategy validationStrategy, ModelMapper mapper) {
 		this.repository = repository;
 		this.validationStrategy = validationStrategy;
 		this.mapper = mapper;
@@ -52,8 +53,8 @@ public class VehicleServiceImpl implements VehicleService {
 					"Vehicle already exists. License plate is " + vehicleRequest.getLicensePlate());
 		}
 		validationStrategy.validate(vehicleRequest.getLicensePlate());
-		Vehicle model = mapper.map(vehicleRequest, Vehicle.class);
-		return mapper.map(repository.save(model), VehicleDto.class);
+		Vehicle mVehicle = mapper.map(vehicleRequest, Vehicle.class);
+		return mapper.map(repository.save(mVehicle), VehicleDto.class);
 	}
 
 	@Override

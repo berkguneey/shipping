@@ -13,10 +13,12 @@ public class PackageDto {
 	private UUID id;
 	private String barcode;
 	private DeliveryPointDto deliveryPoint;
+	private BagDto bag;
+	private Integer state;
 	private Integer weight;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
 	private LocalDateTime createdAt;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
 	private LocalDateTime updatedAt;
 
 }
