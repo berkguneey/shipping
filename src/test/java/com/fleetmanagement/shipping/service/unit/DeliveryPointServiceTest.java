@@ -27,11 +27,9 @@ import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
 
 import com.fleetmanagement.shipping.dto.DeliveryPointRequestDto;
-import com.fleetmanagement.shipping.dto.VehicleRequestDto;
 import com.fleetmanagement.shipping.exception.BusinessException;
 import com.fleetmanagement.shipping.exception.NoDataFoundException;
 import com.fleetmanagement.shipping.model.DeliveryPoint;
-import com.fleetmanagement.shipping.model.Vehicle;
 import com.fleetmanagement.shipping.repository.DeliveryPointRepository;
 import com.fleetmanagement.shipping.service.impl.DeliveryPointServiceImpl;
 
@@ -45,11 +43,6 @@ class DeliveryPointServiceTest {
 	ModelMapper mapper = new ModelMapper();
 	@InjectMocks
 	DeliveryPointServiceImpl service;
-	
-	VehicleRequestDto vehicleRequest;
-	List<Vehicle> vehicleList;
-	Vehicle vehicle1;
-	Vehicle vehicle2;
 	
 	DeliveryPointRequestDto deliveryPointRequest;
 	List<DeliveryPoint> deliveryPointList;
@@ -87,7 +80,7 @@ class DeliveryPointServiceTest {
 	}
 	
 	@Test
-	public void testGetDeliveryPointById_ReturnNoDataFound() {
+	public void testGetDeliveryPointById_ReturnNoDataFoundException() {
 		when(repository.findById(any())).thenReturn(Optional.empty());
 		assertThrows(NoDataFoundException.class, () -> service.getDeliveryPointById(UUID.randomUUID()));
 	}
@@ -100,7 +93,7 @@ class DeliveryPointServiceTest {
 	}
 	
 	@Test
-	public void testInsert_ReturnAlreadyExists() {
+	public void testInsert_ReturnBusinessException() {
 		when(repository.existsDeliveryPointByName(anyString())).thenReturn(true);
 		when(repository.save(any(DeliveryPoint.class))).thenReturn(deliveryPoint1);
 		assertThrows(BusinessException.class, () -> service.insert(deliveryPointRequest));

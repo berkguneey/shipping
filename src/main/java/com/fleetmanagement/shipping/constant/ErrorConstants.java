@@ -2,7 +2,7 @@ package com.fleetmanagement.shipping.constant;
 
 public enum ErrorConstants {
 	
-	VEHICLE_NOT_FOUND(1001L, "Vehicle not found. "),
+	VEHICLE_NOT_FOUND(1001L, "Vehicle not found."),
 	VEHICLE_ALREADY_EXISTS(1002L, "Vehicle already exists."),
 	DELIVERY_POINT_NOT_FOUND(1003L, "Delivery point not found."),
 	DELIVERY_POINT_ALREADY_EXISTS(1004L, "Delivery point already exists."),

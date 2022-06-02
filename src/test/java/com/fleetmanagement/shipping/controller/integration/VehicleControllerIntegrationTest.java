@@ -69,7 +69,7 @@ class VehicleControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testCreateVehicle_ReturnIncorrectFormat() throws Exception {
+	public void testCreateVehicle_Return400_InvalidFormat() throws Exception {
 		this.mockMvc.perform(
 				post("/api/v0/vehicles")
                 .content("{\"licensePlate\": \"34XXX4\",\"model\": \"HONDA\"}")
@@ -81,7 +81,7 @@ class VehicleControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testCreateVehicle_ReturnAlreadyExists() throws Exception {
+	public void testCreateVehicle_Return400_AlreadyExists() throws Exception {
 		this.mockMvc.perform(
 				post("/api/v0/vehicles")
                 .content("{\"licensePlate\": \"34XX444\",\"model\": \"HONDA\"}")
@@ -103,7 +103,7 @@ class VehicleControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testGetVehicleByLicensePlate_ReturnNoDataFound() throws Exception {
+	public void testGetVehicleByLicensePlate_Return404_NoDataFound() throws Exception {
 		this.mockMvc.perform(
 				get("/api/v0/vehicles/34XX445")
 				.accept(MediaType.APPLICATION_JSON))

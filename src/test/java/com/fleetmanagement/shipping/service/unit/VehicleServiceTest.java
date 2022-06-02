@@ -86,7 +86,7 @@ class VehicleServiceTest {
 	}
 	
 	@Test
-	public void testGetVehicleByLicensePlate_ReturnNoDataFound() {
+	public void testGetVehicleByLicensePlate_ReturnNoDataFoundException() {
 		when(repository.findVehicleByLicensePlate(anyString())).thenReturn(Optional.empty());
 		assertThrows(NoDataFoundException.class, () -> service.getVehicleByLicensePlate("34XX444"));
 	}
@@ -99,7 +99,7 @@ class VehicleServiceTest {
 	}
 	
 	@Test
-	public void testInsert_ReturnAlreadyExists() {
+	public void testInsert_ReturnBusinessException() {
 		when(repository.existsVehicleByLicensePlate(anyString())).thenReturn(true);
 		when(repository.save(any(Vehicle.class))).thenReturn(vehicle1);
 		assertThrows(BusinessException.class, () -> service.insert(vehicleRequest));
