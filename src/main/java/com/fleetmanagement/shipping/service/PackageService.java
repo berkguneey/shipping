@@ -15,4 +15,6 @@ public interface PackageService {
 
 	Long delete(String barcode);
 
+	PackageDto updateBagId(String barcode, PackageRequestDto packageRequest);
+
 }

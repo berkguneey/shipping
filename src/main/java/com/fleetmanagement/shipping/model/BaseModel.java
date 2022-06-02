@@ -30,7 +30,7 @@ public class BaseModel {
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
 
-	@Column
+	@Column(nullable = false)
 	private LocalDateTime updatedAt;
 
 	@PrePersist
