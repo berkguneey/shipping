@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.fleetmanagement.shipping.exception.IncorrectFormatException;
 
 @Component
-@Qualifier("LicensePlateValidationStrategy")
+@Qualifier("LicensePlateValidation")
 public class LicensePlateValidationStrategy implements ValidationStrategy {
 
 	@Override
