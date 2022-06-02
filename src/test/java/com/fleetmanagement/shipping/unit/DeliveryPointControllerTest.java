@@ -68,19 +68,19 @@ class DeliveryPointControllerTest {
 	}
 
 	@Test
-	public void testGetDeliveryPointByPoint() {
+	public void testGetDeliveryPointById() {
 		when(service.getDeliveryPointById(any())).thenReturn(deliveryPoint1);
 		assertNotNull(controller.getDeliveryPointById(UUID.randomUUID()));
 	}
 
 	@Test
-	public void testCreateVehicle() {
+	public void testCreateDeliveryPoint() {
 		when(service.insert(any(DeliveryPointRequestDto.class))).thenReturn(deliveryPoint1);
 		assertNotNull(controller.createDeliveryPoint(deliveryPointRequest));
 	}
 
 	@Test
-	public void testDeleteVehicle() {
+	public void testDeleteDeliveryPoint() {
 		assertNotNull(controller.deleteDeliveryPoint(UUID.randomUUID()));
 		verify(service, times(1)).delete(any());
 	}
