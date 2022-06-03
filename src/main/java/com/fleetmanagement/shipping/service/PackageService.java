@@ -12,9 +12,9 @@ public interface PackageService {
 	PackageDto getPackageByBarcode(String barcode);
 
 	PackageDto insert(PackageRequestDto packageRequest);
+	
+	PackageDto update(String barcode, PackageRequestDto packageRequest);
 
 	Long delete(String barcode);
-
-	PackageDto updateBagId(String barcode, PackageRequestDto packageRequest);
 
 }

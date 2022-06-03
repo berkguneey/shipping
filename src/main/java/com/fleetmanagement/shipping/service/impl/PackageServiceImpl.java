@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.fleetmanagement.shipping.constant.ErrorConstants;
 import com.fleetmanagement.shipping.constant.PackageStatus;
@@ -63,20 +64,33 @@ public class PackageServiceImpl implements PackageService {
 		mPackage.setDeliveryPoint(mapper.map(deliveryPointDto, DeliveryPoint.class));
 		return mapper.map(repository.save(mPackage), PackageDto.class);
 	}
+	
+	@Override
+	public PackageDto update(String barcode, PackageRequestDto packageRequest) {
+		Package mPackage = mapper.map(getPackageByBarcode(barcode), Package.class);
+		if(!ObjectUtils.isEmpty(packageRequest.getDeliveryPointId())) {
+			DeliveryPoint mDeliveryPoint = mapper.map(deliveryPointService.getDeliveryPointById(packageRequest.getDeliveryPointId()), DeliveryPoint.class);
+			mPackage.setDeliveryPoint(mDeliveryPoint);
+		}
+		mPackage.setWeight(packageRequest.getWeight());
+		mPackage.setState(packageRequest.getState());
+		
+		if(!ObjectUtils.isEmpty(packageRequest.getBagBarcode())) {
+			assignBagToPackage(mPackage, packageRequest.getBagBarcode());
+		}
+		return mapper.map(repository.save(mPackage), PackageDto.class);
+	}
+	
+	private void assignBagToPackage(Package mPackage, String bagBarcode) {
+		Bag mBag = mapper.map(bagService.getBagByBarcode(bagBarcode), Bag.class);
+		PackageValidation.haveSameDeliveryPoint(mPackage, mBag);
+		mPackage.setBag(mBag);
+		mPackage.setState(PackageStatus.LOADED_INTO_BAG.getState());
+	}
 
 	@Override
 	public Long delete(String barcode) {
 		return repository.deletePackageByBarcode(barcode);
-	}
-
-	@Override
-	public PackageDto updateBagId(String barcode, PackageRequestDto packageRequest) {
-		Package mPackage = mapper.map(getPackageByBarcode(barcode), Package.class);
-		Bag mBag = mapper.map(bagService.getBagByBarcode(packageRequest.getBagBarcode()), Bag.class);
-		PackageValidation.haveSameDeliveryPoint(mPackage, mBag);
-		mPackage.setBag(mBag);
-		mPackage.setState(PackageStatus.LOADED_INTO_BAG.getState());
-		return mapper.map(repository.save(mPackage), PackageDto.class);
 	}
 
 }

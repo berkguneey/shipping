@@ -43,16 +43,15 @@ public class PackageController {
 	public ResponseEntity<PackageDto> createPackage(@RequestBody PackageRequestDto packageRequest) {
 		return new ResponseEntity<>(service.insert(packageRequest), HttpStatus.OK);
 	}
+	
+	@PutMapping("/{barcode}")
+	public ResponseEntity<PackageDto> updatePackage(@PathVariable String barcode, @RequestBody PackageRequestDto packageRequest) {
+		return new ResponseEntity<>(service.update(barcode, packageRequest), HttpStatus.OK);
+	}
 
 	@DeleteMapping("/{barcode}")
 	public ResponseEntity<Long> deletePackage(@PathVariable String barcode) {
 		return new ResponseEntity<>(service.delete(barcode), HttpStatus.OK);
-	}
-
-	@PutMapping("/{barcode}/bag")
-	public ResponseEntity<PackageDto> updatePackage(@PathVariable String barcode,
-			@RequestBody PackageRequestDto packageRequest) {
-		return new ResponseEntity<>(service.updateBagId(barcode, packageRequest), HttpStatus.OK);
 	}
 
 }

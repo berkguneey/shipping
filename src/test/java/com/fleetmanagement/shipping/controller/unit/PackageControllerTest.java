@@ -83,6 +83,12 @@ class PackageControllerTest {
 		when(service.insert(any(PackageRequestDto.class))).thenReturn(package1);
 		assertNotNull(controller.createPackage(packageRequest));
 	}
+	
+	@Test
+	public void testUpdatePackage() {
+		when(service.update(any(), any(PackageRequestDto.class))).thenReturn(package1);
+		assertNotNull(controller.updatePackage("P7988000121", packageRequest));
+	}
 
 	@Test
 	public void testDeletePackage() {

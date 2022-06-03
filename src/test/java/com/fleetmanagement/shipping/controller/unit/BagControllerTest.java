@@ -82,6 +82,12 @@ class BagControllerTest {
 	}
 	
 	@Test
+	public void testUpdateBag() {
+		when(service.update(any(), any(BagRequestDto.class))).thenReturn(bag1);
+		assertNotNull(controller.updateBag("C725797", bagRequest));
+	}
+	
+	@Test
 	public void testDeleteBag() {
 		when(service.delete(any())).thenReturn(1L);
 		assertNotNull(controller.deleteBag("C725797"));

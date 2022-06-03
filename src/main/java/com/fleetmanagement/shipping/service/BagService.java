@@ -15,4 +15,6 @@ public interface BagService {
 
 	Long delete(String barcode);
 
+	BagDto update(String barcode, BagRequestDto bagRequest);
+
 }

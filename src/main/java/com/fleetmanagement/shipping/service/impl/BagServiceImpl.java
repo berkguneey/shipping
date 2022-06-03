@@ -6,28 +6,29 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.fleetmanagement.shipping.constant.ErrorConstants;
 import com.fleetmanagement.shipping.dto.BagDto;
 import com.fleetmanagement.shipping.dto.BagRequestDto;
-import com.fleetmanagement.shipping.dto.DeliveryPointDto;
 import com.fleetmanagement.shipping.exception.BusinessException;
 import com.fleetmanagement.shipping.exception.NoDataFoundException;
 import com.fleetmanagement.shipping.model.Bag;
 import com.fleetmanagement.shipping.model.DeliveryPoint;
 import com.fleetmanagement.shipping.repository.BagRepository;
 import com.fleetmanagement.shipping.service.BagService;
+import com.fleetmanagement.shipping.service.DeliveryPointService;
 import com.fleetmanagement.shipping.util.BagValidation;
 
 @Service
 public class BagServiceImpl implements BagService {
 
 	private final BagRepository repository;
-	private final DeliveryPointServiceImpl deliveryPointService;
+	private final DeliveryPointService deliveryPointService;
 	private final ModelMapper mapper;
 
 	@Autowired
-	public BagServiceImpl(BagRepository repository, DeliveryPointServiceImpl deliveryPointService, ModelMapper mapper) {
+	public BagServiceImpl(BagRepository repository, DeliveryPointService deliveryPointService, ModelMapper mapper) {
 		this.repository = repository;
 		this.deliveryPointService = deliveryPointService;
 		this.mapper = mapper;
@@ -50,9 +51,20 @@ public class BagServiceImpl implements BagService {
 			throw new BusinessException(ErrorConstants.BAG_ALREADY_EXISTS);
 		}
 		BagValidation.isValid(bagRequest.getBarcode());
-		DeliveryPointDto deliveryPointDto = deliveryPointService.getDeliveryPointById(bagRequest.getDeliveryPointId());
+		DeliveryPoint mDeliveryPoint =  mapper.map(deliveryPointService.getDeliveryPointById(bagRequest.getDeliveryPointId()), DeliveryPoint.class);
 		Bag mBag = mapper.map(bagRequest, Bag.class);
-		mBag.setDeliveryPoint(mapper.map(deliveryPointDto, DeliveryPoint.class));
+		mBag.setDeliveryPoint(mDeliveryPoint);
+		return mapper.map(repository.save(mBag), BagDto.class);
+	}
+	
+	@Override
+	public BagDto update(String barcode, BagRequestDto bagRequest) {
+		Bag mBag = mapper.map(getBagByBarcode(barcode), Bag.class);
+		if(!ObjectUtils.isEmpty(bagRequest.getDeliveryPointId())) {
+			DeliveryPoint mDeliveryPoint = mapper.map(deliveryPointService.getDeliveryPointById(bagRequest.getDeliveryPointId()), DeliveryPoint.class);
+			mBag.setDeliveryPoint(mDeliveryPoint);
+		}
+		mBag.setState(bagRequest.getState());
 		return mapper.map(repository.save(mBag), BagDto.class);
 	}
 

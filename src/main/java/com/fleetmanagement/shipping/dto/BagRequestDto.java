@@ -7,5 +7,6 @@ public class BagRequestDto {
 	
 	private String barcode;
 	private Long deliveryPointId;
+	private Integer state;
 
 }

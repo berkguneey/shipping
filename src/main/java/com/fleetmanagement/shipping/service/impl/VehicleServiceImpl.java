@@ -43,7 +43,7 @@ public class VehicleServiceImpl implements VehicleService {
 
 	@Override
 	public VehicleDto insert(VehicleRequestDto vehicleRequest) {
-		if (repository.existsVehicleByLicensePlate(vehicleRequest.getLicensePlate())) {
+		if (isVehicleExists(vehicleRequest.getLicensePlate())) {
 			throw new BusinessException(ErrorConstants.VEHICLE_ALREADY_EXISTS);
 		}
 		VehicleValidation.isValid(vehicleRequest.getLicensePlate());
@@ -54,6 +54,13 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public Long delete(String licensePlate) {
 		return repository.deleteVehicleByLicensePlate(licensePlate);
+	}
+	
+	private boolean isVehicleExists(String licensePlate) {
+		if (repository.existsVehicleByLicensePlate(licensePlate)) {
+			return true;
+		}
+		return false;
 	}
 
 }

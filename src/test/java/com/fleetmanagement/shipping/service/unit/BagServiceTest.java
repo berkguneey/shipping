@@ -113,6 +113,14 @@ class BagServiceTest {
 	}
 	
 	@Test
+	public void testUpdate() {
+		when(repository.findBagByBarcode(anyString())).thenReturn(Optional.of(bag1));
+		when(deliveryPointServiceImpl.getDeliveryPointById(any())).thenReturn(deliveryPoint);
+		when(repository.save(any(Bag.class))).thenReturn(bag1);
+		assertNotNull(service.update("C725797", bagRequest));
+	}
+	
+	@Test
 	public void testDeleteBag() {
 		when(repository.save(any())).thenReturn(1L);
 		assertNotNull(service.delete("C725797"));

@@ -9,5 +9,6 @@ public class PackageRequestDto {
 	private Long deliveryPointId;
 	private Integer weight;
 	private String bagBarcode;
+	private Integer state;
 
 }
