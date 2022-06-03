@@ -56,13 +56,13 @@ class BagServiceTest {
 	@BeforeEach
 	public void setUp() {
 		deliveryPoint = new DeliveryPointDto();
-		deliveryPoint.setId(UUID.randomUUID());
+		deliveryPoint.setId(1L);
 		deliveryPoint.setName("Branch");
 		deliveryPoint.setCreatedAt(LocalDateTime.now());
 		
 		bagRequest = new BagRequestDto();
 		bagRequest.setBarcode("C725797");
-		bagRequest.setDeliveryPointId(UUID.randomUUID());
+		bagRequest.setDeliveryPointId(2L);
 		
 		bag1 = new Bag();
 		bag1.setId(UUID.randomUUID());

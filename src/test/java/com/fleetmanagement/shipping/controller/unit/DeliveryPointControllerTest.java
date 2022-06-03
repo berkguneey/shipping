@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,12 +48,12 @@ class DeliveryPointControllerTest {
 		deliveryPointRequest.setName("Branch");
 
 		deliveryPoint1 = new DeliveryPointDto();
-		deliveryPoint1.setId(UUID.randomUUID());
+		deliveryPoint1.setId(1L);
 		deliveryPoint1.setName("Branch");
 		deliveryPoint1.setCreatedAt(LocalDateTime.now());
 
 		deliveryPoint2 = new DeliveryPointDto();
-		deliveryPoint2.setId(UUID.randomUUID());
+		deliveryPoint2.setId(2L);
 		deliveryPoint2.setName("Distribution Center");
 		deliveryPoint2.setCreatedAt(LocalDateTime.now());
 
@@ -70,7 +69,7 @@ class DeliveryPointControllerTest {
 	@Test
 	public void testGetDeliveryPointById() {
 		when(service.getDeliveryPointById(any())).thenReturn(deliveryPoint1);
-		assertNotNull(controller.getDeliveryPointById(UUID.randomUUID()));
+		assertNotNull(controller.getDeliveryPointById(1L));
 	}
 
 	@Test
@@ -81,7 +80,7 @@ class DeliveryPointControllerTest {
 
 	@Test
 	public void testDeleteDeliveryPoint() {
-		assertNotNull(controller.deleteDeliveryPoint(UUID.randomUUID()));
+		assertNotNull(controller.deleteDeliveryPoint(1L));
 		verify(service, times(1)).delete(any());
 	}
 

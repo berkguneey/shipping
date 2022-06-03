@@ -46,7 +46,7 @@ class BagControllerTest {
 	public void setUp() {
 		bagRequest = new BagRequestDto();
 		bagRequest.setBarcode("C725797");
-		bagRequest.setDeliveryPointId(UUID.randomUUID());
+		bagRequest.setDeliveryPointId(1L);
 		
 		bag1 = new BagDto();
 		bag1.setId(UUID.randomUUID());

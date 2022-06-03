@@ -1,7 +1,6 @@
 package com.fleetmanagement.shipping.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +34,7 @@ public class DeliveryPointController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<DeliveryPointDto> getDeliveryPointById(@PathVariable UUID id) {
+	public ResponseEntity<DeliveryPointDto> getDeliveryPointById(@PathVariable Long id) {
 		return new ResponseEntity<>(service.getDeliveryPointById(id), HttpStatus.OK);
 	}
 
@@ -46,7 +45,7 @@ public class DeliveryPointController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Long> deleteDeliveryPoint(@PathVariable UUID id) {
+	public ResponseEntity<Long> deleteDeliveryPoint(@PathVariable Long id) {
 		service.delete(id);
 		return new ResponseEntity<>(1L, HttpStatus.OK);
 	}

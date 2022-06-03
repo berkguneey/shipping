@@ -46,7 +46,7 @@ class PackageControllerTest {
 	public void setUp() {
 		packageRequest = new PackageRequestDto();
 		packageRequest.setBarcode("P7988000121");
-		packageRequest.setDeliveryPointId(UUID.randomUUID());
+		packageRequest.setDeliveryPointId(1L);
 		packageRequest.setWeight(10);
 
 		package1 = new PackageDto();

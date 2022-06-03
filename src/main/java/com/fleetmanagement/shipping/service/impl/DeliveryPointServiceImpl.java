@@ -1,7 +1,6 @@
 package com.fleetmanagement.shipping.service.impl;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -36,7 +35,7 @@ public class DeliveryPointServiceImpl implements DeliveryPointService {
 	}
 
 	@Override
-	public DeliveryPointDto getDeliveryPointById(UUID id) {
+	public DeliveryPointDto getDeliveryPointById(Long id) {
 		return mapper.map(
 				repository.findById(id)
 						.orElseThrow(() -> new NoDataFoundException(ErrorConstants.DELIVERY_POINT_NOT_FOUND)),
@@ -53,7 +52,7 @@ public class DeliveryPointServiceImpl implements DeliveryPointService {
 	}
 
 	@Override
-	public void delete(UUID id) {
+	public void delete(Long id) {
 		repository.deleteById(id);
 	}
 

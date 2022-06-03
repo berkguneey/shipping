@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,12 +54,12 @@ class DeliveryPointServiceTest {
 		deliveryPointRequest.setName("Branch");
 
 		deliveryPoint1 = new DeliveryPoint();
-		deliveryPoint1.setId(UUID.randomUUID());
+		deliveryPoint1.setId(1L);
 		deliveryPoint1.setName("Branch");
 		deliveryPoint1.setCreatedAt(LocalDateTime.now());
 
 		deliveryPoint2 = new DeliveryPoint();
-		deliveryPoint2.setId(UUID.randomUUID());
+		deliveryPoint2.setId(2L);
 		deliveryPoint2.setName("Distribution Center");
 		deliveryPoint2.setCreatedAt(LocalDateTime.now());
 
@@ -76,13 +75,13 @@ class DeliveryPointServiceTest {
 	@Test
 	public void testGetDeliveryPointById() {
 		when(repository.findById(any())).thenReturn(Optional.of(deliveryPoint1));
-		assertNotNull(service.getDeliveryPointById(UUID.randomUUID()));
+		assertNotNull(service.getDeliveryPointById(1L));
 	}
 	
 	@Test
 	public void testGetDeliveryPointById_ReturnNoDataFoundException() {
 		when(repository.findById(any())).thenReturn(Optional.empty());
-		assertThrows(NoDataFoundException.class, () -> service.getDeliveryPointById(UUID.randomUUID()));
+		assertThrows(NoDataFoundException.class, () -> service.getDeliveryPointById(1L));
 	}
 
 	@Test
@@ -101,7 +100,7 @@ class DeliveryPointServiceTest {
 
 	@Test
 	public void testDelete() {
-		service.delete(UUID.randomUUID());
+		service.delete(1L);
 		verify(repository, times(1)).deleteById(any());
 	}
 

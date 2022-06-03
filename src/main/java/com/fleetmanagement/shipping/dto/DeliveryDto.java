@@ -3,9 +3,9 @@ package com.fleetmanagement.shipping.dto;
 import lombok.Data;
 
 @Data
-public class BagRequestDto {
+public class DeliveryDto {
 	
 	private String barcode;
-	private Long deliveryPointId;
+	private Integer state;
 
 }
