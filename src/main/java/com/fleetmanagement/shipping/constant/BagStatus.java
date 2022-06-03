@@ -2,7 +2,7 @@ package com.fleetmanagement.shipping.constant;
 
 public enum BagStatus {
 
-	CREATED(1), LOADED(2), UNLOADED(3);
+	CREATED(1), LOADED(3), UNLOADED(4);
 
 	private int state;
 

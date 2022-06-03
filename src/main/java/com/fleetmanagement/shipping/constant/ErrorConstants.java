@@ -13,7 +13,8 @@ public enum ErrorConstants {
 	BAG_BARCODE_FORMAT_INVALID(1009L, "Bag barcode format is incorrect."),
 	LICENSE_PLATE_FORMAT_INVALID(1010L, "License plate format is incorrect."),
 	PACKAGE_BARCODE_FORMAT_INVALID(1011L, "Package barcode format is incorrect."),
-	DELIVERY_POINT_DISMATCH(1012L, "The package loaded into a bag must have the same delivery point as the bag.");
+	DELIVERY_POINT_DISMATCH(1012L, "The package loaded into a bag must have the same delivery point as the bag."),
+	DELIVERY_POINT_INVALID(1013l, "Delivery point is invalid.");
 	
 	private Long code;
 	private String message;
