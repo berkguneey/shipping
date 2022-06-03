@@ -23,12 +23,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.fleetmanagement.shipping.dto.VehicleRequestDto;
 import com.fleetmanagement.shipping.exception.BusinessException;
 import com.fleetmanagement.shipping.exception.NoDataFoundException;
-import com.fleetmanagement.shipping.helper.ValidationStrategy;
 import com.fleetmanagement.shipping.model.Vehicle;
 import com.fleetmanagement.shipping.repository.VehicleRepository;
 import com.fleetmanagement.shipping.service.impl.VehicleServiceImpl;
@@ -39,9 +37,6 @@ class VehicleServiceTest {
 
 	@Mock
 	VehicleRepository repository;
-	@Qualifier("LicensePlateValidation")
-	@Mock
-	ValidationStrategy validationStrategy;
 	@Spy
 	ModelMapper mapper = new ModelMapper();
 	@InjectMocks

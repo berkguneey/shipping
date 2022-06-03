@@ -23,13 +23,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.fleetmanagement.shipping.dto.BagRequestDto;
 import com.fleetmanagement.shipping.dto.DeliveryPointDto;
 import com.fleetmanagement.shipping.exception.BusinessException;
 import com.fleetmanagement.shipping.exception.NoDataFoundException;
-import com.fleetmanagement.shipping.helper.ValidationStrategy;
 import com.fleetmanagement.shipping.model.Bag;
 import com.fleetmanagement.shipping.model.DeliveryPoint;
 import com.fleetmanagement.shipping.repository.BagRepository;
@@ -44,9 +42,6 @@ class BagServiceTest {
 	BagRepository repository;
 	@Mock
 	DeliveryPointServiceImpl deliveryPointServiceImpl;
-	@Qualifier("BagBarcodeValidation")
-	@Mock
-	ValidationStrategy validationStrategy;
 	@Spy
 	ModelMapper mapper = new ModelMapper();
 	@InjectMocks
