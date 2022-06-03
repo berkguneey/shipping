@@ -50,7 +50,7 @@ public class BagServiceImpl implements BagService {
 		if (repository.existsBagByBarcode(bagRequest.getBarcode())) {
 			throw new BusinessException(ErrorConstants.BAG_ALREADY_EXISTS);
 		}
-		BagValidation.isValid(bagRequest.getBarcode());
+		BagValidation.checkValid(bagRequest.getBarcode());
 		DeliveryPoint mDeliveryPoint =  mapper.map(deliveryPointService.getDeliveryPointById(bagRequest.getDeliveryPointId()), DeliveryPoint.class);
 		Bag mBag = mapper.map(bagRequest, Bag.class);
 		mBag.setDeliveryPoint(mDeliveryPoint);

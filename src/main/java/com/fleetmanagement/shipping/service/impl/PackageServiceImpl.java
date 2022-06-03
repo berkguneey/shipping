@@ -1,6 +1,7 @@
 package com.fleetmanagement.shipping.service.impl;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -57,35 +58,43 @@ public class PackageServiceImpl implements PackageService {
 		if (repository.existsPackageByBarcode(packageRequest.getBarcode())) {
 			throw new BusinessException(ErrorConstants.PACKAGE_ALREADY_EXISTS);
 		}
-		PackageValidation.isValid(packageRequest.getBarcode());
+		PackageValidation.checkValid(packageRequest.getBarcode());
 		DeliveryPointDto deliveryPointDto = deliveryPointService
 				.getDeliveryPointById(packageRequest.getDeliveryPointId());
 		Package mPackage = mapper.map(packageRequest, Package.class);
 		mPackage.setDeliveryPoint(mapper.map(deliveryPointDto, DeliveryPoint.class));
 		return mapper.map(repository.save(mPackage), PackageDto.class);
 	}
-	
+
 	@Override
 	public PackageDto update(String barcode, PackageRequestDto packageRequest) {
 		Package mPackage = mapper.map(getPackageByBarcode(barcode), Package.class);
-		if(!ObjectUtils.isEmpty(packageRequest.getDeliveryPointId())) {
-			DeliveryPoint mDeliveryPoint = mapper.map(deliveryPointService.getDeliveryPointById(packageRequest.getDeliveryPointId()), DeliveryPoint.class);
+		if (!ObjectUtils.isEmpty(packageRequest.getDeliveryPointId())) {
+			DeliveryPoint mDeliveryPoint = mapper.map(
+					deliveryPointService.getDeliveryPointById(packageRequest.getDeliveryPointId()),
+					DeliveryPoint.class);
 			mPackage.setDeliveryPoint(mDeliveryPoint);
 		}
-		mPackage.setWeight(packageRequest.getWeight());
-		mPackage.setState(packageRequest.getState());
-		
-		if(!ObjectUtils.isEmpty(packageRequest.getBagBarcode())) {
+		if (!ObjectUtils.isEmpty(packageRequest.getState())) {
+			mPackage.setState(packageRequest.getState());
+		}
+		if (!ObjectUtils.isEmpty(packageRequest.getBagBarcode())) {
 			assignBagToPackage(mPackage, packageRequest.getBagBarcode());
 		}
 		return mapper.map(repository.save(mPackage), PackageDto.class);
 	}
-	
+
 	private void assignBagToPackage(Package mPackage, String bagBarcode) {
 		Bag mBag = mapper.map(bagService.getBagByBarcode(bagBarcode), Bag.class);
 		PackageValidation.haveSameDeliveryPoint(mPackage, mBag);
 		mPackage.setBag(mBag);
 		mPackage.setState(PackageStatus.LOADED_INTO_BAG.getState());
+	}
+
+	@Override
+	public List<PackageDto> getPackagesByBagId(UUID bagId) {
+		return repository.findPackagesByBagId(bagId).stream().map(bag -> mapper.map(bag, PackageDto.class))
+				.collect(Collectors.toList());
 	}
 
 	@Override

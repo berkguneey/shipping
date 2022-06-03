@@ -8,29 +8,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fleetmanagement.shipping.dto.VehicleDto;
-import com.fleetmanagement.shipping.dto.VehicleRequestDto;
-import com.fleetmanagement.shipping.service.VehicleService;
+import com.fleetmanagement.shipping.dto.ShipmentDto;
+import com.fleetmanagement.shipping.service.ShipmentService;
 
 @RestController
 @RequestMapping("/api/v0/shipments")
 public class ShipmentController {
 
-	private final VehicleService service;
+	private final ShipmentService service;
 
 	@Autowired
-	public ShipmentController(VehicleService service) {
+	public ShipmentController(ShipmentService service) {
 		this.service = service;
 	}
 
-	@PostMapping("/load")
-	public ResponseEntity<VehicleDto> load(@RequestBody VehicleRequestDto vehicleRequest) {
-		return new ResponseEntity<>(service.insert(vehicleRequest), HttpStatus.OK);
-	}
-	
-	@PostMapping("/unload")
-	public ResponseEntity<VehicleDto> unload(@RequestBody VehicleRequestDto vehicleRequest) {
-		return new ResponseEntity<>(service.insert(vehicleRequest), HttpStatus.OK);
+	@PostMapping("/transfer")
+	public ResponseEntity<ShipmentDto> transfer(@RequestBody ShipmentDto shipment) {
+		return new ResponseEntity<>(service.transfer(shipment), HttpStatus.OK);
 	}
 
 }
