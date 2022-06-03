@@ -33,5 +33,9 @@ public class IncorrectSentLog extends BaseModel {
 	@NotNull
 	@Column(nullable = false)
 	private String barcode;
+	
+	@NotNull
+	@Column(nullable = false)
+	private String message;
 
 }
