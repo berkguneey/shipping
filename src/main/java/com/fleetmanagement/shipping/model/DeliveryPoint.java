@@ -7,9 +7,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import com.sun.istack.NotNull;
 
@@ -20,9 +22,12 @@ import lombok.Setter;
 @Setter
 @Entity
 public class DeliveryPoint extends BaseModel {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(generator = "custom-generator")
+	@GenericGenerator(name = "custom-generator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+			@Parameter(name = "sequence_name", value = "id_seq"), @Parameter(name = "initial_value", value = "4"),
+			@Parameter(name = "increment_size", value = "1") })
 	@NotNull
 	@Column(nullable = false)
 	private Long id;
@@ -30,11 +35,11 @@ public class DeliveryPoint extends BaseModel {
 	@NotNull
 	@Column(nullable = false)
 	private String name;
-	
+
 	@OneToMany(mappedBy = "deliveryPoint", cascade = CascadeType.ALL)
-    private Set<Bag> bags = new HashSet<>();
-	
+	private Set<Bag> bags = new HashSet<>();
+
 	@OneToMany(mappedBy = "deliveryPoint", cascade = CascadeType.ALL)
-    private Set<Package> packages = new HashSet<>();
+	private Set<Package> packages = new HashSet<>();
 
 }

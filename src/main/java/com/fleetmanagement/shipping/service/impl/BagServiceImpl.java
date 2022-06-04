@@ -64,7 +64,9 @@ public class BagServiceImpl implements BagService {
 			DeliveryPoint mDeliveryPoint = mapper.map(deliveryPointService.getDeliveryPointById(bagRequest.getDeliveryPointId()), DeliveryPoint.class);
 			mBag.setDeliveryPoint(mDeliveryPoint);
 		}
-		mBag.setState(bagRequest.getState());
+		if (!ObjectUtils.isEmpty(bagRequest.getState())) {
+			mBag.setState(bagRequest.getState());
+		}
 		return mapper.map(repository.save(mBag), BagDto.class);
 	}
 
