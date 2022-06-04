@@ -8,18 +8,23 @@ import org.springframework.stereotype.Service;
 
 import com.fleetmanagement.shipping.constant.BagStatus;
 import com.fleetmanagement.shipping.constant.CommonConstants;
+import com.fleetmanagement.shipping.constant.ErrorConstants;
 import com.fleetmanagement.shipping.constant.PackageStatus;
 import com.fleetmanagement.shipping.dto.BagRequestDto;
 import com.fleetmanagement.shipping.dto.DeliveryDto;
 import com.fleetmanagement.shipping.dto.PackageRequestDto;
 import com.fleetmanagement.shipping.dto.RouteDto;
 import com.fleetmanagement.shipping.dto.ShipmentDto;
+import com.fleetmanagement.shipping.exception.BusinessException;
 import com.fleetmanagement.shipping.helper.ValidationStrategyFactory;
 import com.fleetmanagement.shipping.service.BagService;
 import com.fleetmanagement.shipping.service.PackageService;
 import com.fleetmanagement.shipping.service.ShipmentService;
 import com.fleetmanagement.shipping.service.VehicleService;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Service
 public class ShipmentServiceImpl implements ShipmentService {
 
@@ -41,6 +46,7 @@ public class ShipmentServiceImpl implements ShipmentService {
 		vehicleService.getVehicleByLicensePlate(shipment.getPlate());
 		shipment.getRoute().forEach(route -> {
 			loadShipments(route.getDeliveries());
+			log.info("Route deliveries are loaded to vehicle. Delivery point of route is " + route.getDeliveryPoint());
 		});
 		unloadShipments(shipment.getRoute());
 		return shipment;
@@ -76,8 +82,13 @@ public class ShipmentServiceImpl implements ShipmentService {
 	private void unloadShipments(List<RouteDto> routeList) {
 		routeList.forEach(route -> {
 			String deliveryPointId = String.valueOf(route.getDeliveryPoint());
-			List<DeliveryDto> deliveryList = strategyFactory.getStrategy(deliveryPointId).unload(route.getDeliveries(),route.getDeliveryPoint());
-			route.setDeliveries(deliveryList);
+			try {
+				List<DeliveryDto> deliveryList = strategyFactory.getStrategy(deliveryPointId).unload(route.getDeliveries(),route.getDeliveryPoint());
+				route.setDeliveries(deliveryList);
+				log.info("Route deliveries are unloaded from vehicle. Delivery point of route is " + route.getDeliveryPoint());
+			} catch( BusinessException ex) {
+				log.error(ErrorConstants.DELIVERY_POINT_INVALID.getMessage() + " Delivery point is " + deliveryPointId);
+			}
 		});
 	}
 	

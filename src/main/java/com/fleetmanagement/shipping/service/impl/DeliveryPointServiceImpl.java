@@ -16,6 +16,9 @@ import com.fleetmanagement.shipping.model.DeliveryPoint;
 import com.fleetmanagement.shipping.repository.DeliveryPointRepository;
 import com.fleetmanagement.shipping.service.DeliveryPointService;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Service
 public class DeliveryPointServiceImpl implements DeliveryPointService {
 
@@ -45,6 +48,7 @@ public class DeliveryPointServiceImpl implements DeliveryPointService {
 	@Override
 	public DeliveryPointDto insert(DeliveryPointRequestDto deliveryPointRequest) {
 		if (repository.existsDeliveryPointByName(deliveryPointRequest.getName())) {
+			log.error(ErrorConstants.DELIVERY_POINT_ALREADY_EXISTS.getMessage() + " Delivery point is " + deliveryPointRequest.getName());
 			throw new BusinessException(ErrorConstants.DELIVERY_POINT_ALREADY_EXISTS);
 		}
 		DeliveryPoint mDeliveryPoint = mapper.map(deliveryPointRequest, DeliveryPoint.class);

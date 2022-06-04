@@ -20,6 +20,9 @@ import com.fleetmanagement.shipping.service.BagService;
 import com.fleetmanagement.shipping.service.DeliveryPointService;
 import com.fleetmanagement.shipping.util.BagValidation;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Service
 public class BagServiceImpl implements BagService {
 
@@ -48,6 +51,7 @@ public class BagServiceImpl implements BagService {
 	@Override
 	public BagDto insert(BagRequestDto bagRequest) {
 		if (repository.existsBagByBarcode(bagRequest.getBarcode())) {
+			log.error(ErrorConstants.BAG_ALREADY_EXISTS.getMessage() + " Bag barcode is " + bagRequest.getBarcode());
 			throw new BusinessException(ErrorConstants.BAG_ALREADY_EXISTS);
 		}
 		BagValidation.checkValid(bagRequest.getBarcode());

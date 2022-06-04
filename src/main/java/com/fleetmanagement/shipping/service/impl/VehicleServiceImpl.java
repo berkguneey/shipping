@@ -17,6 +17,9 @@ import com.fleetmanagement.shipping.repository.VehicleRepository;
 import com.fleetmanagement.shipping.service.VehicleService;
 import com.fleetmanagement.shipping.util.VehicleValidation;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Service
 public class VehicleServiceImpl implements VehicleService {
 
@@ -44,6 +47,7 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public VehicleDto insert(VehicleRequestDto vehicleRequest) {
 		if (isVehicleExists(vehicleRequest.getLicensePlate())) {
+			log.error(ErrorConstants.VEHICLE_ALREADY_EXISTS.getMessage() + " License plate is " + vehicleRequest.getLicensePlate());
 			throw new BusinessException(ErrorConstants.VEHICLE_ALREADY_EXISTS);
 		}
 		VehicleValidation.isValid(vehicleRequest.getLicensePlate());

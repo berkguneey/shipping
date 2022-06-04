@@ -25,6 +25,9 @@ import com.fleetmanagement.shipping.service.DeliveryPointService;
 import com.fleetmanagement.shipping.service.PackageService;
 import com.fleetmanagement.shipping.util.PackageValidation;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Service
 public class PackageServiceImpl implements PackageService {
 
@@ -56,6 +59,7 @@ public class PackageServiceImpl implements PackageService {
 	@Override
 	public PackageDto insert(PackageRequestDto packageRequest) {
 		if (repository.existsPackageByBarcode(packageRequest.getBarcode())) {
+			log.error(ErrorConstants.PACKAGE_ALREADY_EXISTS.getMessage() + " Package barcode is " + packageRequest.getBarcode());
 			throw new BusinessException(ErrorConstants.PACKAGE_ALREADY_EXISTS);
 		}
 		PackageValidation.checkValid(packageRequest.getBarcode());

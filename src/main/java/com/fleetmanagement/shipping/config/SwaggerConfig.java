@@ -30,7 +30,7 @@ public class SwaggerConfig {
 	private ApiInfo apiInfo() {
 	    return new ApiInfoBuilder()
 	        .title("Fleet Management Backend API")
-	        .description("Backend API")
+	        .description("Case Study")
 	        .contact(new Contact("Berk Can Güney", "berkguney.com", "berkcanguney@gmail.com"))
 	        .version("v0")
 	        .build();
