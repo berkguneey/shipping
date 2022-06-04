@@ -12,6 +12,7 @@ import com.fleetmanagement.shipping.dto.ShipmentDto;
 import com.fleetmanagement.shipping.service.ShipmentService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "Shipment Controller")
 @RestController
@@ -25,6 +26,7 @@ public class ShipmentController {
 		this.service = service;
 	}
 
+	@ApiOperation(value = "Delivery transfer simulation")
 	@PostMapping("/transfer")
 	public ResponseEntity<ShipmentDto> transfer(@RequestBody ShipmentDto shipment) {
 		return new ResponseEntity<>(service.transfer(shipment), HttpStatus.OK);

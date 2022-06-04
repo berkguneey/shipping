@@ -43,13 +43,13 @@ class BranchValidationStrategyTest {
 	DeliveryPointDto deliveryPointDto1;
 	DeliveryPointDto deliveryPointDto2;
 	List<DeliveryDto> deliveryList;
-	DeliveryDto delivery1;
+	DeliveryDto deliveryWithBagBarcode;
 	DeliveryDto delivery2;
 	DeliveryDto delivery3;
 	DeliveryDto delivery4;
-	PackageDto dPackage1;
-	PackageDto dPackage2;
-	PackageDto dPackage3;
+	PackageDto dPackageForDelivery2;
+	PackageDto dPackageForDelivery3;
+	PackageDto dPackageForDelivery4;
 	
 	@BeforeEach
 	public void setUp() {
@@ -63,9 +63,9 @@ class BranchValidationStrategyTest {
 		deliveryPointDto2.setName("Distribution Center");
 		deliveryPointDto2.setCreatedAt(LocalDateTime.now());
 		
-		delivery1 = new DeliveryDto();
-		delivery1.setBarcode("C725797");
-		delivery1.setState(3);
+		deliveryWithBagBarcode = new DeliveryDto();
+		deliveryWithBagBarcode.setBarcode("C725797");
+		deliveryWithBagBarcode.setState(3);
 		
 		delivery2 = new DeliveryDto();
 		delivery2.setBarcode("P1111111112");
@@ -79,26 +79,26 @@ class BranchValidationStrategyTest {
 		delivery4.setBarcode("P1111111114");
 		delivery4.setState(3);
 		
-		dPackage1 = new PackageDto();
-		dPackage1.setDeliveryPoint(deliveryPointDto2);
-		dPackage1.setBag(null);
+		dPackageForDelivery2 = new PackageDto();
+		dPackageForDelivery2.setDeliveryPoint(deliveryPointDto2);
+		dPackageForDelivery2.setBag(null);
 		
-		dPackage2 = new PackageDto();
-		dPackage2.setDeliveryPoint(deliveryPointDto1);
-		dPackage2.setBag(new BagDto());
+		dPackageForDelivery3 = new PackageDto();
+		dPackageForDelivery3.setDeliveryPoint(deliveryPointDto1);
+		dPackageForDelivery3.setBag(new BagDto());
 		
-		dPackage3 = new PackageDto();
-		dPackage3.setDeliveryPoint(deliveryPointDto1);
-		dPackage3.setBag(null);
+		dPackageForDelivery4 = new PackageDto();
+		dPackageForDelivery4.setDeliveryPoint(deliveryPointDto1);
+		dPackageForDelivery4.setBag(null);
 		
-		deliveryList = new ArrayList<>(Arrays.asList(delivery1, delivery2, delivery3, delivery4));
+		deliveryList = new ArrayList<>(Arrays.asList(deliveryWithBagBarcode, delivery2, delivery3, delivery4));
 	}
 	
 	@Test
 	public void testUnload() {
-		when(packageService.getPackageByBarcode("P1111111112")).thenReturn(dPackage1);
-		when(packageService.getPackageByBarcode("P1111111113")).thenReturn(dPackage2);
-		when(packageService.getPackageByBarcode("P1111111114")).thenReturn(dPackage3);
+		when(packageService.getPackageByBarcode(delivery2.getBarcode())).thenReturn(dPackageForDelivery2);
+		when(packageService.getPackageByBarcode(delivery3.getBarcode())).thenReturn(dPackageForDelivery3);
+		when(packageService.getPackageByBarcode(delivery4.getBarcode())).thenReturn(dPackageForDelivery4);
 		when(incorrectSentLogService.insert(any(IncorrectSentLogRequestDto.class))).thenReturn(new IncorrectSentLogDto());
 		when(packageService.update(anyString(), any(PackageRequestDto.class))).thenReturn(new PackageDto());
 		assertNotNull(strategy.unload(deliveryList, 1L));

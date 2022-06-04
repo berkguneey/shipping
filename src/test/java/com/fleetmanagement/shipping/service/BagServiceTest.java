@@ -47,6 +47,7 @@ class BagServiceTest {
 	@InjectMocks
 	BagServiceImpl service;
 	
+	DeliveryPoint mDeliveryPoint;
 	DeliveryPointDto deliveryPoint;
 	BagRequestDto bagRequest;
 	List<Bag> bagList;
@@ -55,6 +56,11 @@ class BagServiceTest {
 
 	@BeforeEach
 	public void setUp() {
+		mDeliveryPoint = new DeliveryPoint();
+		mDeliveryPoint.setId(1L);
+		mDeliveryPoint.setName("Branch");
+		mDeliveryPoint.setCreatedAt(LocalDateTime.now());
+		
 		deliveryPoint = new DeliveryPointDto();
 		deliveryPoint.setId(1L);
 		deliveryPoint.setName("Branch");
@@ -68,7 +74,7 @@ class BagServiceTest {
 		bag1 = new Bag();
 		bag1.setId(UUID.randomUUID());
 		bag1.setBarcode("C725797");
-		bag1.setDeliveryPoint(new DeliveryPoint());
+		bag1.setDeliveryPoint(mDeliveryPoint);
 		bag1.setCreatedAt(LocalDateTime.now());
 		
 		bag2 = new Bag();

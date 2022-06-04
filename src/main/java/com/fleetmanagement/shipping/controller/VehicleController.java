@@ -18,6 +18,7 @@ import com.fleetmanagement.shipping.dto.VehicleRequestDto;
 import com.fleetmanagement.shipping.service.VehicleService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "Vehicle Controller")
 @RestController
@@ -31,21 +32,25 @@ public class VehicleController {
 		this.service = service;
 	}
 
+	@ApiOperation(value = "Get all vehicles")
 	@GetMapping
 	public ResponseEntity<List<VehicleDto>> getVehicles() {
 		return new ResponseEntity<>(service.getAllVehicles(), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Get vehicle by using unique license plate data")
 	@GetMapping("/{licensePlate}")
 	public ResponseEntity<VehicleDto> getVehicleByLicensePlate(@PathVariable String licensePlate) {
 		return new ResponseEntity<>(service.getVehicleByLicensePlate(licensePlate), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Create vehicle")
 	@PostMapping
 	public ResponseEntity<VehicleDto> createVehicle(@RequestBody VehicleRequestDto vehicleRequest) {
 		return new ResponseEntity<>(service.insert(vehicleRequest), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Delete vehicle")
 	@DeleteMapping("/{licensePlate}")
 	public ResponseEntity<Long> deleteVehicle(@PathVariable String licensePlate) {
 		return new ResponseEntity<>(service.delete(licensePlate), HttpStatus.OK);

@@ -18,6 +18,7 @@ import com.fleetmanagement.shipping.dto.DeliveryPointRequestDto;
 import com.fleetmanagement.shipping.service.DeliveryPointService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "Delivery Point Controller")
 @RestController
@@ -31,22 +32,26 @@ public class DeliveryPointController {
 		this.service = service;
 	}
 
+	@ApiOperation(value = "Get all delivery points")
 	@GetMapping
 	public ResponseEntity<List<DeliveryPointDto>> getDeliveryPoints() {
 		return new ResponseEntity<>(service.getAllDeliveryPoints(), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Get delivery point by using unique id data")
 	@GetMapping("/{id}")
 	public ResponseEntity<DeliveryPointDto> getDeliveryPointById(@PathVariable Long id) {
 		return new ResponseEntity<>(service.getDeliveryPointById(id), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Create delivery point")
 	@PostMapping
 	public ResponseEntity<DeliveryPointDto> createDeliveryPoint(
 			@RequestBody DeliveryPointRequestDto deliveryPointRequest) {
 		return new ResponseEntity<>(service.insert(deliveryPointRequest), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Delete delivery point")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Long> deleteDeliveryPoint(@PathVariable Long id) {
 		service.delete(id);

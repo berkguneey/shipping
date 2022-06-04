@@ -19,6 +19,7 @@ import com.fleetmanagement.shipping.dto.PackageRequestDto;
 import com.fleetmanagement.shipping.service.PackageService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "Package Controller")
 @RestController
@@ -32,26 +33,31 @@ public class PackageController {
 		this.service = service;
 	}
 
+	@ApiOperation(value = "Get all packages")
 	@GetMapping
 	public ResponseEntity<List<PackageDto>> getPackages() {
 		return new ResponseEntity<>(service.getAllPackages(), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Get package by using unique barcode data")
 	@GetMapping("/{barcode}")
 	public ResponseEntity<PackageDto> getPackageByBarcode(@PathVariable String barcode) {
 		return new ResponseEntity<>(service.getPackageByBarcode(barcode), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Create package")
 	@PostMapping
 	public ResponseEntity<PackageDto> createPackage(@RequestBody PackageRequestDto packageRequest) {
 		return new ResponseEntity<>(service.insert(packageRequest), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "Update package")
 	@PutMapping("/{barcode}")
 	public ResponseEntity<PackageDto> updatePackage(@PathVariable String barcode, @RequestBody PackageRequestDto packageRequest) {
 		return new ResponseEntity<>(service.update(barcode, packageRequest), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Delete package")
 	@DeleteMapping("/{barcode}")
 	public ResponseEntity<Long> deletePackage(@PathVariable String barcode) {
 		return new ResponseEntity<>(service.delete(barcode), HttpStatus.OK);
