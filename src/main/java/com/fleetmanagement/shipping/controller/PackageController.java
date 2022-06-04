@@ -18,6 +18,9 @@ import com.fleetmanagement.shipping.dto.PackageDto;
 import com.fleetmanagement.shipping.dto.PackageRequestDto;
 import com.fleetmanagement.shipping.service.PackageService;
 
+import io.swagger.annotations.Api;
+
+@Api(tags = "Package Controller")
 @RestController
 @RequestMapping("/api/v0/packages")
 public class PackageController {

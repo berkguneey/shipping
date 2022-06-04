@@ -18,6 +18,9 @@ import com.fleetmanagement.shipping.dto.BagDto;
 import com.fleetmanagement.shipping.dto.BagRequestDto;
 import com.fleetmanagement.shipping.service.BagService;
 
+import io.swagger.annotations.Api;
+
+@Api(tags = "Bag Controller")
 @RestController
 @RequestMapping("/api/v0/bags")
 public class BagController {

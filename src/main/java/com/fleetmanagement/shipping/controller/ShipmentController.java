@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fleetmanagement.shipping.dto.ShipmentDto;
 import com.fleetmanagement.shipping.service.ShipmentService;
 
+import io.swagger.annotations.Api;
+
+@Api(tags = "Shipment Controller")
 @RestController
 @RequestMapping("/api/v0/shipments")
 public class ShipmentController {

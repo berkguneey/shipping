@@ -17,6 +17,9 @@ import com.fleetmanagement.shipping.dto.VehicleDto;
 import com.fleetmanagement.shipping.dto.VehicleRequestDto;
 import com.fleetmanagement.shipping.service.VehicleService;
 
+import io.swagger.annotations.Api;
+
+@Api(tags = "Vehicle Controller")
 @RestController
 @RequestMapping("/api/v0/vehicles")
 public class VehicleController {

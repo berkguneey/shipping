@@ -17,6 +17,9 @@ import com.fleetmanagement.shipping.dto.DeliveryPointDto;
 import com.fleetmanagement.shipping.dto.DeliveryPointRequestDto;
 import com.fleetmanagement.shipping.service.DeliveryPointService;
 
+import io.swagger.annotations.Api;
+
+@Api(tags = "Delivery Point Controller")
 @RestController
 @RequestMapping("/api/v0/delivery-points")
 public class DeliveryPointController {
