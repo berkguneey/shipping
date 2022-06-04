@@ -10,7 +10,6 @@ import org.springframework.util.ObjectUtils;
 import com.fleetmanagement.shipping.constant.CommonConstants;
 import com.fleetmanagement.shipping.constant.PackageStatus;
 import com.fleetmanagement.shipping.dto.DeliveryDto;
-import com.fleetmanagement.shipping.dto.IncorrectSentLogRequestDto;
 import com.fleetmanagement.shipping.dto.PackageDto;
 import com.fleetmanagement.shipping.dto.PackageRequestDto;
 import com.fleetmanagement.shipping.service.IncorrectSentLogService;
@@ -61,12 +60,9 @@ public class BranchValidationStrategy implements DeliveryPointValidationStrategy
 		packageService.update(barcode, packageRequest);
 	}
 
-	private void addLog(String barcode, Long deliveryPointId, String message) {
-		IncorrectSentLogRequestDto incorrectSentLogRequest = new IncorrectSentLogRequestDto();
-		incorrectSentLogRequest.setBarcode(barcode);
-		incorrectSentLogRequest.setDeliveryPointId(deliveryPointId);
-		incorrectSentLogRequest.setMessage(message);
-		incorrectSentLogService.insert(incorrectSentLogRequest);
+	@Override
+	public IncorrectSentLogService getIncorrectSentLogService() {
+		return incorrectSentLogService;
 	}
 
 }

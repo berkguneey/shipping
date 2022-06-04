@@ -13,7 +13,6 @@ import com.fleetmanagement.shipping.constant.PackageStatus;
 import com.fleetmanagement.shipping.dto.BagDto;
 import com.fleetmanagement.shipping.dto.BagRequestDto;
 import com.fleetmanagement.shipping.dto.DeliveryDto;
-import com.fleetmanagement.shipping.dto.IncorrectSentLogRequestDto;
 import com.fleetmanagement.shipping.dto.PackageDto;
 import com.fleetmanagement.shipping.dto.PackageRequestDto;
 import com.fleetmanagement.shipping.service.BagService;
@@ -65,7 +64,7 @@ public class DistributionCenterValidationStrategy implements DeliveryPointValida
 				delivery.setState(PackageStatus.UNLOADED.getState());
 				if(!ObjectUtils.isEmpty(dPackage.getBag())) {
 					List<PackageDto> packageList = packageService.getPackagesByBagId(dPackage.getBag().getId());
-					if (packageList.stream().allMatch(pckg -> pckg.getState() == 4)) {
+					if (packageList.stream().allMatch(pckg -> pckg.getState() == PackageStatus.UNLOADED.getState())) {
 						updateBagStatus(dPackage.getBag().getBarcode());
 					}
 				}
@@ -85,13 +84,10 @@ public class DistributionCenterValidationStrategy implements DeliveryPointValida
 		bagRequest.setState(BagStatus.UNLOADED.getState());
 		bagService.update(barcode, bagRequest);
 	}
-
-	private void addLog(String barcode, Long deliveryPointId, String message) {
-		IncorrectSentLogRequestDto incorrectSentLogRequest = new IncorrectSentLogRequestDto();
-		incorrectSentLogRequest.setBarcode(barcode);
-		incorrectSentLogRequest.setDeliveryPointId(deliveryPointId);
-		incorrectSentLogRequest.setMessage(message);
-		incorrectSentLogService.insert(incorrectSentLogRequest);
+	
+	@Override
+	public IncorrectSentLogService getIncorrectSentLogService() {
+		return incorrectSentLogService;
 	}
 
 }
