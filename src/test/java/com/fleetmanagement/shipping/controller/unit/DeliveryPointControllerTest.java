@@ -19,7 +19,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.modelmapper.ModelMapper;
 
 import com.fleetmanagement.shipping.controller.DeliveryPointController;
 import com.fleetmanagement.shipping.dto.DeliveryPointDto;
@@ -32,8 +31,6 @@ class DeliveryPointControllerTest {
 
 	@Mock
 	DeliveryPointService service;
-	@Mock
-	ModelMapper mapper;
 	@InjectMocks
 	DeliveryPointController controller;
 

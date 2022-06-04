@@ -1,7 +1,7 @@
 package com.fleetmanagement.shipping.service.unit;
 
-import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -154,6 +154,12 @@ class PackageServiceTest {
 		when(bagServiceImpl.getBagByBarcode(any())).thenReturn(bag);
 		when(repository.save(any(Package.class))).thenReturn(package1);
 		assertNotNull(service.update("P7988000121", packageRequestWithBagId));
+	}
+	
+	@Test
+	public void testGetPackagesByBagId() {
+		when(repository.findPackagesByBagId(any())).thenReturn(packageList);
+		assertNotNull(service.getPackagesByBagId(UUID.randomUUID()));
 	}
 	
 	@Test

@@ -18,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.modelmapper.ModelMapper;
 
 import com.fleetmanagement.shipping.controller.BagController;
 import com.fleetmanagement.shipping.dto.BagDto;
@@ -32,8 +31,6 @@ class BagControllerTest {
 
 	@Mock
 	BagService service;
-	@Mock
-	ModelMapper mapper;
 	@InjectMocks
 	BagController controller;
 	

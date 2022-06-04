@@ -1,7 +1,7 @@
 package com.fleetmanagement.shipping.service.unit;
 
-import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -63,6 +63,7 @@ class BagServiceTest {
 		bagRequest = new BagRequestDto();
 		bagRequest.setBarcode("C725797");
 		bagRequest.setDeliveryPointId(2L);
+		bagRequest.setState(1);
 		
 		bag1 = new Bag();
 		bag1.setId(UUID.randomUUID());
