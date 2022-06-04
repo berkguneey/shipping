@@ -1,4 +1,4 @@
-package com.fleetmanagement.shipping.service.unit;
+package com.fleetmanagement.shipping.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,9 +31,6 @@ import com.fleetmanagement.shipping.helper.BranchValidationStrategy;
 import com.fleetmanagement.shipping.helper.DistributionCenterValidationStrategy;
 import com.fleetmanagement.shipping.helper.TransferCenterValidationStrategy;
 import com.fleetmanagement.shipping.helper.ValidationStrategyFactory;
-import com.fleetmanagement.shipping.service.BagService;
-import com.fleetmanagement.shipping.service.PackageService;
-import com.fleetmanagement.shipping.service.VehicleService;
 import com.fleetmanagement.shipping.service.impl.ShipmentServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
