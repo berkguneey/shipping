@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.fleetmanagement.shipping.controller.unit.PackageControllerTest
--------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.021 s - in com.fleetmanagement.shipping.controller.unit.PackageControllerTest
