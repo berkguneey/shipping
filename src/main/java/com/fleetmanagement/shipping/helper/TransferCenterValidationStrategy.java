@@ -48,11 +48,11 @@ public class TransferCenterValidationStrategy implements DeliveryPointValidation
 					addLog(barcode, deliveryPointId, CommonConstants.DELIVER_TO_WRONG_POINT);
 					return;
 				}
-				updateBagStatus(barcode);
+				unloadBag(barcode);
 				delivery.setState(BagStatus.UNLOADED.getState());
 				List<PackageDto> packageList = packageService.getPackagesByBagId(dBag.getId());
 				packageList.forEach(pckg -> {
-					updatePackageStatus(pckg.getBarcode());
+					unloadPackage(pckg.getBarcode());
 				});
 			} else if (PackageValidation.isValid(barcode)) {
 				PackageDto dPackage = packageService.getPackageByBarcode(barcode);
@@ -64,26 +64,24 @@ public class TransferCenterValidationStrategy implements DeliveryPointValidation
 					addLog(barcode, deliveryPointId, CommonConstants.TRANSFER_CENTER_ERR_MESSAGE); // do not need
 					return;
 				}
-				updatePackageStatus(barcode);
+				unloadPackage(barcode);
 				delivery.setState(PackageStatus.UNLOADED.getState());
-				if(!ObjectUtils.isEmpty(dPackage.getBag())) {
-					List<PackageDto> packageList = packageService.getPackagesByBagId(dPackage.getBag().getId());
-					if(packageList.stream().allMatch(pckg -> pckg.getState() == PackageStatus.UNLOADED.getState())) {
-						updateBagStatus(dPackage.getBag().getBarcode());
-					}
+				List<PackageDto> packageList = packageService.getPackagesByBagId(dPackage.getBag().getId());
+				if (packageList.stream().allMatch(pckg -> pckg.getState() == PackageStatus.UNLOADED.getState())) {
+					unloadBag(dPackage.getBag().getBarcode());
 				}
 			}
 		});
 		return deliveryList;
 	}
-	
-	private void updatePackageStatus(String barcode) {
+
+	private void unloadPackage(String barcode) {
 		PackageRequestDto packageRequest = new PackageRequestDto();
 		packageRequest.setState(PackageStatus.UNLOADED.getState());
 		packageService.update(barcode, packageRequest);
 	}
 
-	private void updateBagStatus(String barcode) {
+	private void unloadBag(String barcode) {
 		BagRequestDto bagRequest = new BagRequestDto();
 		bagRequest.setState(BagStatus.UNLOADED.getState());
 		bagService.update(barcode, bagRequest);

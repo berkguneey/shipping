@@ -47,14 +47,14 @@ public class BranchValidationStrategy implements DeliveryPointValidationStrategy
 				addLog(barcode, deliveryPointId, CommonConstants.BRANCH_ERR_MESSAGE); // do not need
 				return;
 			}
-			updatePackageStatus(barcode);
+			unloadPackage(barcode);
 			delivery.setState(PackageStatus.UNLOADED.getState());
 
 		});
 		return deliveryList;
 	}
 
-	private void updatePackageStatus(String barcode) {
+	private void unloadPackage(String barcode) {
 		PackageRequestDto packageRequest = new PackageRequestDto();
 		packageRequest.setState(PackageStatus.UNLOADED.getState());
 		packageService.update(barcode, packageRequest);

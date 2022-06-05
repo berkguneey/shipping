@@ -97,9 +97,9 @@ class ShipmentServiceTest {
 	public void testTransfer() {
 		when(bagService.update(anyString(), any(BagRequestDto.class))).thenReturn(new BagDto());
 		when(packageService.update(anyString(), any(PackageRequestDto.class))).thenReturn(new PackageDto());
-		when(strategyFactory.getStrategy("1")).thenReturn(branchValidationStrategy);
-		when(strategyFactory.getStrategy("2")).thenReturn(distributionCenterValidationStrategy);
-		when(strategyFactory.getStrategy("3")).thenReturn(transferCenterValidationStrategy);
+		when(strategyFactory.getStrategy(1L)).thenReturn(branchValidationStrategy);
+		when(strategyFactory.getStrategy(2L)).thenReturn(distributionCenterValidationStrategy);
+		when(strategyFactory.getStrategy(3L)).thenReturn(transferCenterValidationStrategy);
 		when(branchValidationStrategy.unload(any(), any())).thenReturn(deliveryList);
 		when(distributionCenterValidationStrategy.unload(any(), any())).thenReturn(deliveryList);
 		when(transferCenterValidationStrategy.unload(any(), any())).thenReturn(deliveryList);

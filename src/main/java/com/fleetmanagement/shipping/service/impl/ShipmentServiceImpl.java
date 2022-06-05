@@ -81,7 +81,7 @@ public class ShipmentServiceImpl implements ShipmentService {
 	
 	private void unloadShipments(List<RouteDto> routeList) {
 		routeList.forEach(route -> {
-			String deliveryPointId = String.valueOf(route.getDeliveryPoint());
+			Long deliveryPointId = route.getDeliveryPoint();
 			try {
 				List<DeliveryDto> deliveryList = strategyFactory.getStrategy(deliveryPointId).unload(route.getDeliveries(),route.getDeliveryPoint());
 				route.setDeliveries(deliveryList);
