@@ -15,7 +15,7 @@ Transfer Center: Only bags and packages in bags may be unloaded.
 
 ## Getting Started
 
-### Features
+### Using
 
 * Spring Boot
 * Java 8
@@ -41,4 +41,8 @@ docker run -p 8080:8080 fleet-management-be-api
 
 ## License
 
-MIT
+Distributed under the MIT License. See [`LICENSE`](https://choosealicense.com/licenses/mit/) for more information.
+
+## Contact
+
+Berk Can Güney - [Github](https://github.com/berkguneey)
