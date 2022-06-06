@@ -27,6 +27,12 @@ Transfer Center: Only bags and packages in bags may be unloaded.
 
 ### Executing program
 
+* This command executes the application without test values. For this reason, integration tests will fail.
+* If you want to work with test data, this command should be commented out. (#)
+```
+spring.sql.init.mode=never
+```
+
 * The application can be run locally or in a docker container, the requirements for each setup are listed below.
 * You can execute the program on 8080 port with Docker. Go to the project folder then execute following commands.
 ```
