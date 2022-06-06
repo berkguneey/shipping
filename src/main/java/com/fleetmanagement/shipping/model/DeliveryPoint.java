@@ -26,7 +26,7 @@ public class DeliveryPoint extends BaseModel {
 	@Id
 	@GeneratedValue(generator = "custom-generator")
 	@GenericGenerator(name = "custom-generator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
-			@Parameter(name = "sequence_name", value = "id_seq"), @Parameter(name = "initial_value", value = "4"),
+			@Parameter(name = "sequence_name", value = "ID_SEQ"), @Parameter(name = "initial_value", value = "1"),
 			@Parameter(name = "increment_size", value = "1") })
 	@NotNull
 	@Column(nullable = false)
