@@ -17,8 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import com.fleetmanagement.shipping.controller.VehicleController;
 import com.fleetmanagement.shipping.dto.VehicleDto;
@@ -26,7 +24,6 @@ import com.fleetmanagement.shipping.dto.VehicleRequestDto;
 import com.fleetmanagement.shipping.service.VehicleService;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class VehicleControllerTest {
 
 	@Mock

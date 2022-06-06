@@ -16,8 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import com.fleetmanagement.shipping.dto.BagDto;
 import com.fleetmanagement.shipping.dto.DeliveryDto;
@@ -30,7 +28,6 @@ import com.fleetmanagement.shipping.service.IncorrectSentLogService;
 import com.fleetmanagement.shipping.service.PackageService;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class BranchValidationStrategyTest {
 
 	@Mock

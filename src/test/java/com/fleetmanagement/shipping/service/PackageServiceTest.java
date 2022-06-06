@@ -20,8 +20,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
 
 import com.fleetmanagement.shipping.dto.BagDto;
@@ -37,7 +35,6 @@ import com.fleetmanagement.shipping.service.impl.DeliveryPointServiceImpl;
 import com.fleetmanagement.shipping.service.impl.PackageServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class PackageServiceTest {
 
 	@Mock
@@ -136,7 +133,6 @@ class PackageServiceTest {
 	@Test
 	public void testInsert_ReturnBusinessException() {
 		when(repository.existsPackageByBarcode(anyString())).thenReturn(true);
-		when(repository.save(any(Package.class))).thenReturn(package1);
 		assertThrows(BusinessException.class, () -> service.insert(packageRequest));
 	}
 	
@@ -164,7 +160,7 @@ class PackageServiceTest {
 	
 	@Test
 	public void testDeletePackage() {
-		when(repository.save(any())).thenReturn(1L);
+		when(repository.deletePackageByBarcode(any())).thenReturn(1L);
 		assertNotNull(service.delete("P7988000121"));
 	}
 

@@ -20,8 +20,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
 
 import com.fleetmanagement.shipping.dto.VehicleRequestDto;
@@ -32,7 +30,6 @@ import com.fleetmanagement.shipping.repository.VehicleRepository;
 import com.fleetmanagement.shipping.service.impl.VehicleServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class VehicleServiceTest {
 
 	@Mock
@@ -96,7 +93,6 @@ class VehicleServiceTest {
 	@Test
 	public void testInsert_ReturnBusinessException() {
 		when(repository.existsVehicleByLicensePlate(anyString())).thenReturn(true);
-		when(repository.save(any(Vehicle.class))).thenReturn(vehicle1);
 		assertThrows(BusinessException.class, () -> service.insert(vehicleRequest));
 	}
 	

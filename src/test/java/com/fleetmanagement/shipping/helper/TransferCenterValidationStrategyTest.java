@@ -17,8 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import com.fleetmanagement.shipping.dto.BagDto;
 import com.fleetmanagement.shipping.dto.DeliveryDto;
@@ -32,7 +30,6 @@ import com.fleetmanagement.shipping.service.IncorrectSentLogService;
 import com.fleetmanagement.shipping.service.PackageService;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class TransferCenterValidationStrategyTest {
 
 	@Mock
@@ -103,14 +100,17 @@ class TransferCenterValidationStrategyTest {
 		dBag2.setCreatedAt(LocalDateTime.now());
 		
 		dPackageForDelivery2 = new PackageDto();
+		dPackageForDelivery2.setBarcode("P1111111116");
 		dPackageForDelivery2.setDeliveryPoint(deliveryPointDto1);
 		dPackageForDelivery2.setBag(null);
 		
 		dPackageForDelivery3 = new PackageDto();
+		dPackageForDelivery3.setBarcode("P1111111117");
 		dPackageForDelivery3.setDeliveryPoint(deliveryPointDto3);
 		dPackageForDelivery3.setBag(null);
 		
 		dPackageForDelivery4 = new PackageDto();
+		dPackageForDelivery4.setBarcode("P1111111118");
 		dPackageForDelivery4.setDeliveryPoint(deliveryPointDto3);
 		dPackageForDelivery4.setBag(new BagDto());
 		dPackageForDelivery4.setState(4);

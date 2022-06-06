@@ -17,8 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import com.fleetmanagement.shipping.dto.BagDto;
 import com.fleetmanagement.shipping.dto.BagRequestDto;
@@ -34,7 +32,6 @@ import com.fleetmanagement.shipping.helper.ValidationStrategyFactory;
 import com.fleetmanagement.shipping.service.impl.ShipmentServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class ShipmentServiceTest {
 
 	@Mock
